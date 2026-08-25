@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarboSteps — Our Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carbon:#1A1A1A;
+    --anthracite:#3A3A3A;
+    --steel:#8A8A8A;
+    --offwhite:#F2F2F0;
+    --nearwhite:#FAFAF9;
+    --white:#FFFFFF;
+    --rouge:#F60000;
+    --grid-line: rgba(26,26,26,0.06);
+    --sand:#F2EBDC;
+    --frame-light:#F9F6F0;
+    --terracotta:#F60000;
+    --terracotta-dark:#C20000;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'DM Sans', sans-serif;
+    background:var(--nearwhite);
+    color:var(--carbon);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1280px; margin:0 auto; padding:0 48px;}
+  @media(max-width:760px){ .wrap{padding:0 24px;} }
+
+  /* ---------- NAV (identical to index.html) ---------- */
+  nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(250,250,249,0.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(26,26,26,0.07);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 48px; max-width:1280px; margin:0 auto;
+  }
+  @media(max-width:760px){ .nav-inner{padding:16px 24px;} }
+  .nav-logo{ height:26px; width:auto; display:block; }
+  .nav-links{
+    display:flex; gap:40px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--anthracite);
+  }
+  .nav-links a{ transition:color .2s; }
+  .nav-links a:hover{ color:var(--rouge); }
+  .nav-links a.current{ color:var(--rouge); }
+  @media(max-width:860px){ .nav-links{display:none;} }
+  .nav-cta{
+    background:var(--terracotta); color:var(--white);
+    font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:12px 24px; border-radius:2px; transition:background .2s;
+  }
+  .nav-cta:hover{ background:var(--terracotta-dark); }
+
+  /* ---------- KICKER (identical technique to index.html) ---------- */
+  .kicker{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:11.5px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--rouge);
+    margin-bottom:20px;
+  }
+  .kicker .dash{ width:18px; height:1px; background:var(--rouge); }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:80px 48px 96px; }
+  @media(max-width:760px){ .hero{padding:56px 24px 64px;} }
+  .hero-grid{
+    max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns:1.05fr 1fr; align-items:center; gap:8px;
+    text-align:left;
+  }
+  @media(max-width:860px){
+    .hero-grid{ grid-template-columns:1fr; gap:40px; text-align:center; }
+    .hero-media{ order:2; margin-left:0; }
+  }
+  .hero-copy{ position:relative; z-index:2; }
+  .hero h1{
+    font-size:clamp(24px, 2.6vw, 34px); font-weight:700; letter-spacing:-0.01em; line-height:1.15;
+  }
+  .hero h1 .accent{ color:var(--rouge); }
+  .hero h1 .fade{ display:block; color:var(--steel); font-weight:400; font-style:italic; margin-top:6px; }
+  .hero-rule{ width:36px; height:2px; background:var(--rouge); margin:18px 0; }
+  @media(max-width:860px){ .hero-rule{ margin:18px auto; } }
+  .hero-sub{ color:var(--anthracite); font-size:15px; max-width:420px; }
+  @media(max-width:860px){ .hero-sub{ margin:0 auto; } }
+  .hero-media{
+    position:relative; z-index:1; border-radius:4px; overflow:hidden;
+    margin-left:-260px; height:360px;
+  }
+  .hero-media img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  @media(max-width:860px){
+    .hero-media{ height:auto; }
+    .hero-media img{ height:auto; aspect-ratio:1535/1024; }
+  }
+  .hero-media::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to left, rgba(250,250,249,0) 42%, var(--nearwhite) 78%);
+    pointer-events:none;
+  }
+  @media(max-width:860px){
+    .hero-media::after{ background:linear-gradient(to top, rgba(250,250,249,0) 0%, var(--nearwhite) 100%); }
+  }
+
+  /* ---------- NARRATIVE SECTIONS ---------- */
+  .story-section h2 .accent{ color:var(--rouge); }
+  .story-section{ padding:96px 48px; }
+  @media(max-width:760px){ .story-section{ padding:64px 24px; } }
+  .story-section.sand{ background:var(--sand); }
+  .story-section.frame{ background:var(--frame-light); }
+  .story-section.line-top{ border-top:1px solid rgba(26,26,26,0.08); }
+  .story-inner{ max-width:680px; margin:0 auto; }
+  .story-section h2{ font-size:clamp(26px,3.2vw,38px); font-weight:700; letter-spacing:-0.01em; margin-bottom:28px; }
+  .story-copy{ display:flex; flex-direction:column; gap:20px; font-size:15.5px; color:var(--anthracite); line-height:1.7; }
+
+  .pull-quote{ margin:36px 0; }
+  .pull-quote .q-rule{ width:32px; height:2px; background:var(--rouge); margin-bottom:22px; }
+  .pull-quote p{
+    font-size:clamp(21px,2.6vw,28px); font-style:italic; font-weight:500;
+    color:var(--carbon); line-height:1.35; letter-spacing:-0.01em;
+  }
+  .pull-quote .attr{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--steel); margin-top:16px; }
+
+  .founder-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:44px; }
+  @media(max-width:600px){ .founder-grid{ grid-template-columns:1fr; } }
+  .founder-card{ background:var(--offwhite); padding:28px; }
+  .founder-card .stat-rule{ width:24px; height:1px; background:var(--rouge); margin-bottom:14px; }
+  .founder-card .role{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--rouge); font-weight:600; margin-bottom:10px; }
+  .founder-card p{ font-size:13.5px; color:var(--carbon); line-height:1.6; }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{ display:flex; flex-direction:column; margin-top:8px; }
+  .tl-row{ display:grid; grid-template-columns:150px 20px 1fr; }
+  .tl-row:last-child .tl-line{ display:none; }
+  .tl-date{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.06em; color:var(--rouge); padding-top:3px; }
+  .tl-marker{ display:flex; flex-direction:column; align-items:center; }
+  .tl-dot{ width:9px; height:9px; border-radius:50%; background:var(--rouge); flex-shrink:0; margin-top:4px; }
+  .tl-dot.final{ background:var(--carbon); }
+  .tl-line{ width:1px; flex:1; background:rgba(26,26,26,0.12); margin-top:4px; }
+  .tl-content{ padding-bottom:40px; }
+  .tl-title{ font-size:16px; font-weight:700; color:var(--carbon); }
+  .tl-desc{ font-size:13.5px; line-height:1.6; color:var(--anthracite); margin-top:8px; max-width:46ch; }
+  @media(max-width:600px){
+    .tl-row{ grid-template-columns:18px 1fr; }
+    .tl-date{ grid-column:1 / span 2; padding-top:0; margin-bottom:8px; }
+    .tl-marker{ grid-row:2; }
+  }
+
+  /* ---------- FINAL CTA (identical pattern to index.html .final) ---------- */
+  .final{ position:relative; color:var(--carbon); overflow:hidden; background:var(--sand); }
+  .final-content{ position:relative; z-index:2; padding:80px 48px; max-width:1280px; margin:0 auto; width:100%; text-align:center; }
+  @media(max-width:760px){ .final-content{padding:56px 24px;} }
+  .final h2{ font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.01em; }
+  .final h2 .accent{ display:block; color:var(--rouge); font-style:italic; font-weight:500; margin-top:4px; }
+  .final p.lead{ color:var(--anthracite); font-size:15px; max-width:420px; margin:16px auto 0; }
+  .final-btn{
+    display:inline-block; margin-top:32px;
+    background:var(--terracotta); color:var(--white); border:1px solid var(--terracotta);
+    padding:16px 32px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    transition:all .25s;
+  }
+  .final-btn:hover{ background:var(--terracotta-dark); border-color:var(--terracotta-dark); }
+
+  /* ---------- FOOTER (identical to index.html) ---------- */
+  footer{ background:var(--carbon); color:rgba(255,255,255,0.5); padding:48px; text-align:center; }
+  footer .fine{ font-size:11px; max-width:560px; margin:0 auto 16px; line-height:1.7; }
+  footer .copy{ font-size:11px; font-family:'JetBrains Mono', monospace; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html"><img src="assets/logo.png" alt="CarboSteps" class="nav-logo"></a>
+    <div class="nav-links">
+      <a href="index.html#tech">The Technology</a>
+      <a href="index.html#benefits">Benefits</a>
+      <a href="about.html" class="current">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="index.html#cta" class="nav-cta">Pre-order</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div class="hero-copy reveal">
+      <div class="kicker"><span class="dash"></span>Our story</div>
+      <h1>Born on the <span class="accent">Côte d&#39;Azur.</span></h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">CarboSteps started in the French Riviera with one man who was determined to find a cure for his foot pain.</p>
+    </div>
+    <div class="hero-media reveal">
+      <img src="assets/riviera.png" alt="The Côte d'Azur coastline near Antibes, where CarboSteps began.">
+    </div>
+  </div>
+</section>
+
+<!-- 01 — BORN FROM PAIN -->
+<section class="story-section sand" id="origin">
+  <div class="story-inner reveal">
+    <div class="kicker"><span class="dash"></span>01 — The origin</div>
+    <h2>Born from <span class="accent">pain.</span></h2>
+    <div class="story-copy">
+      <p>2022, on the French Riviera. Franck&#39;s days start early — pruning, planting, the quiet physical work of a gardener under the Mediterranean sun. By evening, he becomes someone else entirely: an artist and designer, hands in material, chasing the physics of things that bend, flex, and hold their shape.</p>
+      <p>That same year, Franck is diagnosed with a heel spur. Since 2019, he&#39;d been living with a foot pain that grew little by little — small aches he brushed off, easy to ignore between long days in the garden. He never really took care of his feet, not until the pain became a real problem.</p>
+      <p>He went from one round of shockwave therapy to another. None of it gave him a lasting answer. He tried off-the-shelf insoles too — most didn&#39;t work at all, and the ones that did, only helped for a while before the material gave out. In his line of work, on his feet from sunrise to sundown, everything wore out faster than it was built to. Relief was never more than temporary.</p>
+    </div>
+    <div class="pull-quote">
+      <div class="q-rule"></div>
+      <p>&ldquo;Foam absorbs energy and loses it. Carbon fiber stores it and gives it back.&rdquo;</p>
+      <div class="attr">Franck, Co-founder &amp; Designer</div>
+    </div>
+    <div class="story-copy">
+      <p>But Franck is an artist and a designer — someone with an intimate understanding of materials, how they behave, how they age, how they fail. He knew immediately what foam and plastic couldn&#39;t give him: foam doesn&#39;t last, and plastic loses its strength and form fast. Carbon fiber — the material of aerospace and motorsport — offered something neither ever could: resistance and elasticity that don&#39;t degrade.</p>
+      <p>So he decided to solve it himself. What began as sketches at his kitchen table turned into prototypes, refined with the guidance of a physiotherapist who helped him understand exactly where — and how — the foot needed support. Three years of iteration later, Franck had built something genuinely new: a carbon fiber sole that unloads the foot from pressure, stores the kinetic energy of each step, and releases it in sync with the natural gait — relieving the entire posterior kinetic chain, from foot to spine.</p>
+      <p>The pain lifted. And this time, it stayed away.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 — A NEW APPROACH TO COMFORT -->
+<section class="story-section" id="meeting">
+  <div class="story-inner reveal">
+    <div class="kicker"><span class="dash"></span>02 — The meeting</div>
+    <h2>A new approach to <span class="accent">comfort.</span></h2>
+    <div class="story-copy">
+      <p>It was in July 2025, in Antibes, on the C&ocirc;te d&#39;Azur — the sun-drenched stretch of southern France, home to the Monaco Grand Prix and the Cannes Film Festival — that Bruno and Franck crossed paths.</p>
+      <p>When Bruno first saw the insole, his instinct was doubt. It looked hard — rigid even. Nothing about its appearance suggested comfort. But the moment he put it on, something unexpected happened. The firmness he feared wasn&#39;t there. In its place was something he hadn&#39;t felt before: the elasticity of rebound, a sole that didn&#39;t just cushion the foot but accompanied its movement. And then something else: his back felt lighter. The difference was subtle but real — and impossible to ignore.</p>
+      <p>Franck hadn&#39;t just made a better insole. He had replaced the softness of the material with the elasticity of its rebound — and in doing so, invented an entirely new approach to comfort.</p>
+    </div>
+    <div class="founder-grid">
+      <div class="founder-card">
+        <div class="stat-rule"></div>
+        <div class="role">Franck — Co-founder &amp; Designer</div>
+        <p>Designer and artist by training, inventor by necessity. Franck built the first CarboSteps prototype in his living room after years of searching for a lasting solution to his own chronic heel pain.</p>
+      </div>
+      <div class="founder-card">
+        <div class="stat-rule"></div>
+        <div class="role">Bruno — Co-founder &amp; CEO</div>
+        <p>Entrepreneur and business builder. Bruno recognized the potential of Franck&#39;s invention and joined forces to turn a personal solution into a global product.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 — BUILT FOR AMERICA -->
+<section class="story-section frame line-top" id="venture">
+  <div class="story-inner reveal">
+    <div class="kicker"><span class="dash"></span>03 — The venture</div>
+    <h2>Built for <span class="accent">America.</span></h2>
+    <div class="story-copy">
+      <p>Bruno was intrigued — but also skeptical. So they sought professional opinions. What emerged from those conversations was clear: CarboSteps doesn&#39;t claim to solve medical problems. What it does — measurably and consistently — is improve walking comfort and posture by relieving the posterior kinetic chain and accompanying the natural movement of the foot. The foot works less hard. The body stands taller.</p>
+      <p>They filed for a patent — not just for the insole, but for a broader vision: to make this carbon fiber architecture the centerpiece of an entirely new shoe sole, worn two ways — as a standalone insole or built into a shoe designed around it from the ground up.</p>
+      <p>The choice to launch in the United States was deliberate. Europe has its traditions — and its reluctance. America is where bold ideas find their audience, where new approaches to old problems get the platform they deserve. CarboSteps LLC was incorporated, and the journey began.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 — TIMELINE -->
+<section class="story-section" id="timeline">
+  <div class="story-inner reveal">
+    <div class="kicker"><span class="dash"></span>04 — Where we are</div>
+    <h2>From living room to launch.</h2>
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="tl-date">JANUARY 2022</div>
+        <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Franck starts working.</div>
+          <div class="tl-desc">Sketches at the kitchen table become carbon fiber prototypes, refined with the guidance of a physiotherapist.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">JANUARY 2025</div>
+        <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">First finished prototype.</div>
+          <div class="tl-desc">Three years of iteration lead to a working carbon fiber sole — and Franck&#39;s own pain finally lifts for good.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">JULY 2025</div>
+        <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">The encounter.</div>
+          <div class="tl-desc">Bruno and Franck meet in Antibes, on the C&ocirc;te d&#39;Azur. The CarboSteps project is born.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">OCTOBER 2025</div>
+        <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Product development &amp; incorporation.</div>
+          <div class="tl-desc">The first insole and shoe prototypes are refined. The technology is validated. CarboSteps LLC is incorporated in New Mexico, USA.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">MARCH 2026</div>
+        <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Patent filing.</div>
+          <div class="tl-desc">The carbon fiber CMS technology is formally protected.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026</div>
+        <div class="tl-marker"><div class="tl-dot final"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Launch.</div>
+          <div class="tl-desc">CarboSteps goes to market. Early access list opens now.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="cta">
+  <div class="final-content reveal">
+    <h2>Be part of the story.<span class="accent">Sign up for early access.</span></h2>
+    <p class="lead">Be among the first to experience CarboSteps.</p>
+    <a href="#" class="final-btn">Get early access</a>
+  </div>
+</section>
+
+<footer>
+  <p class="fine">CarboSteps is an FDA Class I exempt device (21 CFR 890.3475). This product relieves fatigue and absorbs impact; it is not a medical treatment and does not claim to treat any specific condition.</p>
+  <div class="copy">© 2026 CarboSteps</div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>

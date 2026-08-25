@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarboSteps — Step into the future of comfort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carbon:#1A1A1A;
+    --anthracite:#3A3A3A;
+    --steel:#8A8A8A;
+    --offwhite:#F2F2F0;
+    --nearwhite:#FAFAF9;
+    --white:#FFFFFF;
+    /* BETA: unified to the exact red used in the "Steps" half of the logo (#F60000) —
+       was #C41017. Applies everywhere --rouge is used: kickers, rules, accents. */
+    --rouge:#F60000;
+    --grid-line: rgba(26,26,26,0.06);
+    /* warm sand band background — BETA test, requested to replace the black
+       bandeaux on the CMS section and the final CTA section */
+    --sand:#F2EBDC;
+    /* BETA: background for the "Works with you, step after step." band */
+    --frame-light:#F9F6F0;
+    /* BETA: Pre-order CTA — was terracotta (#B5502E), now the exact same red
+       as --rouge / the logo's "Steps" red (#F60000), per Bruno's request that
+       every red on the site match the logo exactly. Dark variant is only for
+       the hover state (a flat hover would give no feedback). */
+    --terracotta:#F60000;
+    --terracotta-dark:#C20000;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'DM Sans', sans-serif;
+    background:var(--nearwhite);
+    color:var(--carbon);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1280px; margin:0 auto; padding:0 48px;}
+  @media(max-width:760px){ .wrap{padding:0 24px;} }
+
+  /* placeholder helper for images the user will supply */
+  .img-slot{ position:relative; overflow:hidden; }
+  .img-slot img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .img-slot.img-missing img{ display:none; }
+  .nav-inner .img-slot img{ object-fit:contain; object-position:left center; }
+  .img-slot.img-missing::after{
+    content:attr(data-label);
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:24px;
+    font-family:'JetBrains Mono', monospace; font-size:11.5px;
+    letter-spacing:0.06em; line-height:1.7;
+    background:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(150deg,#2b2b2b,#141414);
+    background-size:20px 20px, 20px 20px, cover;
+    color:rgba(255,255,255,0.55);
+    border:1px dashed rgba(255,255,255,0.2);
+  }
+  .img-slot.light.img-missing::after{
+    background:
+      linear-gradient(rgba(26,26,26,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,26,26,0.05) 1px, transparent 1px),
+      var(--offwhite);
+    background-size:20px 20px, 20px 20px, cover;
+    color:var(--steel);
+    border:1px dashed rgba(26,26,26,0.18);
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(250,250,249,0.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(26,26,26,0.07);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 48px; max-width:1280px; margin:0 auto;
+  }
+  @media(max-width:760px){ .nav-inner{padding:16px 24px;} }
+  .nav-logo{ height:26px; width:auto; display:block; }
+  .nav-links{
+    display:flex; gap:40px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--anthracite);
+  }
+  .nav-links a{ transition:color .2s; }
+  .nav-links a:hover{ color:var(--rouge); }
+  @media(max-width:860px){ .nav-links{display:none;} }
+  .nav-cta{
+    /* BETA: Pre-order in terracotta instead of carbon */
+    background:var(--terracotta); color:var(--white);
+    font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:12px 24px; border-radius:2px; transition:background .2s;
+  }
+  .nav-cta:hover{ background:var(--terracotta-dark); }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:80px 48px 96px; }
+  @media(max-width:760px){ .hero{padding:56px 24px 64px;} }
+  .hero-grid{
+    display:grid; grid-template-columns:0.62fr 1.38fr; gap:56px; align-items:center;
+    max-width:1280px; margin:0 auto;
+  }
+  @media(max-width:900px){ .hero-grid{grid-template-columns:1fr; gap:40px;} }
+  .hero h1{
+    font-size:clamp(30px, 3.2vw, 42px); font-weight:700; letter-spacing:-0.01em; line-height:1.12;
+  }
+  .hero h1 .fade{ display:block; color:var(--steel); font-weight:400; font-style:italic; margin-top:6px; }
+  .hero-rule{ width:36px; height:2px; background:var(--rouge); margin:18px 0; }
+  .hero-sub{ color:var(--anthracite); font-size:14px; max-width:340px; margin-bottom:26px; }
+  .hero-ctas{ display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
+  .btn-primary{
+    /* BETA: Discover the technology in sand-filled instead of carbon */
+    background:var(--sand); color:var(--carbon); border:1px solid var(--carbon);
+    padding:14px 27px; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase;
+    transition:all .2s;
+  }
+  .btn-primary:hover{ background:var(--rouge); color:var(--white); border-color:var(--rouge); }
+  .btn-text{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--carbon);
+  }
+  .btn-text .play{
+    width:24px; height:24px; border-radius:50%; border:1px solid var(--carbon);
+    display:flex; align-items:center; justify-content:center; font-size:9px;
+  }
+
+  /* sketch panel */
+  .sketch-panel{
+    position:relative;
+    background-color:var(--nearwhite);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:32px 32px;
+    padding:16px;
+  }
+  .sketch-panel img{ width:100%; mix-blend-mode:multiply; }
+  .sketch-annot{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px;
+    line-height:1.8; letter-spacing:0.04em; color:var(--steel);
+    position:absolute;
+  }
+  .sketch-annot b{ display:block; color:var(--anthracite); }
+  .sa-tr{ top:24px; right:24px; text-align:right; }
+  .sa-bl{ bottom:24px; left:24px; }
+  .sa-br{ bottom:24px; right:24px; text-align:right; }
+  @media(max-width:600px){ .sketch-annot{ font-size:9px; } .sa-tr,.sa-bl,.sa-br{ position:static; text-align:left; margin-top:10px; } }
+
+  .hero-wordmark{
+    text-align:center; padding:56px 32px 88px;
+    font-size:clamp(34px, 7vw, 76px); font-weight:700; letter-spacing:0.02em;
+  }
+  .hero-wordmark span{ color:var(--rouge); }
+
+  /* ---------- CMS SECTION (BETA: sand band, was black) ---------- */
+  .cms{
+    background:var(--sand); color:var(--carbon);
+    padding:110px 48px;
+  }
+  .cms-grid{
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px; align-items:center;
+    max-width:1280px; margin:0 auto;
+  }
+  @media(max-width:900px){ .cms-grid{grid-template-columns:1fr; gap:44px;} }
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:11.5px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--rouge);
+    margin-bottom:20px;
+  }
+  .kicker .dash{ width:18px; height:1px; background:var(--rouge); }
+  .cms h2{ font-size:clamp(28px,3.4vw,42px); font-weight:700; margin-bottom:20px; letter-spacing:-0.01em; }
+  .cms p{ color:rgba(26,26,26,0.65); font-size:15.5px; max-width:360px; margin-bottom:30px; }
+  .cms-rule{ width:36px; height:1px; background:rgba(26,26,26,0.18); margin-bottom:24px; }
+  .cms-tag{ font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.05em; color:var(--rouge); line-height:1.9; text-transform:uppercase; font-weight:500; }
+  .cms-visual{ aspect-ratio:16/11; }
+  /* BETA: this image slot no longer has the "light" class in the HTML, so it was
+     falling back to the dark placeholder style (black gradient + white dashed
+     border) — jarring inside the new sand section. Override it to match. */
+  .cms .img-slot.img-missing::after{
+    background:var(--frame-light); color:rgba(26,26,26,0.55); border-color:rgba(26,26,26,0.18);
+  }
+
+  /* ---------- FEATURES ---------- */
+  .features{ padding:96px 48px; border-bottom:1px solid rgba(26,26,26,0.08); }
+  .feature-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:40px;
+    max-width:1180px; margin:0 auto; text-align:center;
+  }
+  @media(max-width:760px){ .feature-grid{grid-template-columns:1fr 1fr; row-gap:48px;} }
+  .feature-icon{ width:34px; height:34px; margin:0 auto 22px; stroke:var(--carbon); }
+  .feature-item h4{ font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px; font-weight:700; }
+  .feature-item p{ font-size:13.5px; color:var(--anthracite); max-width:220px; margin:0 auto; }
+
+  /* ---------- BIOMECHANICS (BETA: centered title, full-width image) ---------- */
+  .biomech{ padding:72px 48px 110px; background:var(--frame-light); }
+  .biomech-header{ max-width:640px; margin:0 auto 48px; text-align:center; }
+  .biomech-header .kicker{ justify-content:center; }
+  .biomech h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:18px; letter-spacing:-0.01em; }
+  .biomech-header p.lead{ color:var(--anthracite); font-size:15.5px; max-width:480px; margin:0 auto; }
+  /* BETA: foot-biomechanics.png is 1916×821 (ratio ~2.33:1) — now spans the
+     full section width below the centered title instead of sitting beside
+     the text in a side column. */
+  .biomech-visual{ max-width:1280px; margin:0 auto 48px; aspect-ratio:1916/821; }
+  .biomech-footer{ max-width:1280px; margin:0 auto; text-align:center; }
+  .steps{ display:flex; flex-wrap:wrap; justify-content:center; gap:40px; margin-bottom:28px; }
+  .step{ display:flex; gap:16px; align-items:baseline; max-width:260px; text-align:left; }
+  .step .n{ font-family:'JetBrains Mono', monospace; color:var(--rouge); font-size:13px; font-weight:600; }
+  .step div h5{ font-size:14px; font-weight:700; margin-bottom:3px; }
+  .step div p{ font-size:13.5px; color:var(--anthracite); }
+  .link-arrow{ display:inline-flex; align-items:center; gap:10px; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; }
+  .link-arrow .circ{ width:22px; height:22px; border-radius:50%; border:1px solid var(--carbon); display:flex; align-items:center; justify-content:center; font-size:9px; }
+
+  /* ---------- LONGEVITY (BETA: new band, material/durability story) ---------- */
+  .longevity{ padding:96px 48px; border-top:1px solid rgba(26,26,26,0.08); }
+  /* top half: text left, big seal right */
+  .longevity-header{
+    display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:center;
+    max-width:1180px; margin:0 auto 72px;
+  }
+  @media(max-width:900px){ .longevity-header{grid-template-columns:1fr; gap:36px; text-align:left;} }
+  .longevity-text h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:18px; letter-spacing:-0.01em; }
+  .longevity-text .lead{ color:var(--anthracite); font-size:15.5px; max-width:420px; margin:0; }
+  .longevity-seal{ display:flex; justify-content:center; }
+  /* "en grand, 1:1" — large, square seal on the right of the header */
+  .stamp-lg{ width:100%; max-width:280px; height:auto; aspect-ratio:1/1; transform:rotate(-8deg); }
+  /* bottom half: the 3 stats, back to plain text (no stamp) like before */
+  .longevity-stats{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:40px;
+    max-width:980px; margin:0 auto; text-align:left;
+  }
+  @media(max-width:760px){ .longevity-stats{grid-template-columns:1fr; gap:32px;} }
+  .stat-rule{ width:28px; height:1px; background:var(--rouge); margin-bottom:16px; }
+  .stat-value{ font-family:'JetBrains Mono', monospace; font-size:15px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600; color:var(--carbon); margin-bottom:8px; }
+  .stat-label{ font-size:13.5px; color:var(--anthracite); line-height:1.55; max-width:230px; }
+
+  /* ---------- GUARANTEE (BETA: new band, requested — risk-reversal, same
+     color as the biomechanics band) ---------- */
+  .guarantee{ padding:80px 48px; background:var(--frame-light); text-align:center; }
+  .guarantee-inner{ max-width:560px; margin:0 auto; }
+  .guarantee .kicker{ justify-content:center; }
+  .guarantee h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:14px; letter-spacing:-0.01em; }
+  .guarantee-terms{
+    font-family:'JetBrains Mono', monospace; font-size:14.5px; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--anthracite);
+  }
+  .guarantee-terms .accent{ color:var(--rouge); font-weight:600; }
+  .guarantee-btn{
+    display:inline-block; margin-top:32px;
+    background:var(--terracotta); color:var(--white);
+    padding:15px 30px; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase;
+    border-radius:2px; transition:background .2s;
+  }
+  .guarantee-btn:hover{ background:var(--terracotta-dark); }
+
+  /* ---------- FINAL CTA (BETA: sand band, no photo) ---------- */
+  .final{
+    /* was min-height:70vh + flex align-items:flex-end, sized to anchor text
+       over a full-bleed photo. No photo now, so the band just hugs its
+       content instead of forcing a tall empty area above the text. */
+    position:relative;
+    color:var(--carbon); overflow:hidden; background:var(--sand);
+  }
+  .final-content{ position:relative; z-index:2; padding:80px 48px; max-width:1280px; margin:0 auto; width:100%; }
+  @media(max-width:760px){ .final-content{padding:56px 24px;} }
+  .final h2{ font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.01em; }
+  .final h2 .accent{ display:block; color:var(--rouge); font-style:italic; font-weight:500; margin-top:4px; }
+  .final-btn{
+    /* BETA: matched to the exact same terracotta as the nav and guarantee
+       "Pre-order" buttons — was carbon-outline before. */
+    display:inline-block; margin-top:36px;
+    background:var(--terracotta); color:var(--white); border:1px solid var(--terracotta);
+    padding:16px 32px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    transition:all .25s;
+  }
+  .final-btn:hover{ background:var(--terracotta-dark); border-color:var(--terracotta-dark); }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background:var(--carbon); color:rgba(255,255,255,0.5); padding:48px; text-align:center; }
+  footer .fine{ font-size:11px; max-width:560px; margin:0 auto 16px; line-height:1.7; }
+  footer .copy{ font-size:11px; font-family:'JetBrains Mono', monospace; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="img-slot" data-label="add assets/logo.png" style="width:150px;height:26px;">
+      <img src="assets/logo.png" alt="CarboSteps" class="nav-logo" onerror="this.parentElement.classList.add('img-missing')">
+    </a>
+    <div class="nav-links">
+      <a href="#tech">The Technology</a>
+      <a href="#benefits">Benefits</a>
+      <a href="about.html">Our Story</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="#cta" class="nav-cta">Pre-order</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div class="reveal">
+      <h1>Every morning, the first step hurts.<span class="fade">It doesn't have to.</span></h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">A different way to support every step. Engineered to return energy and reduce stress, so you can keep moving.</p>
+      <div class="hero-ctas">
+        <a href="#tech" class="btn-primary">Discover the technology</a>
+        <a href="#" class="btn-text"><span class="play">▶</span> Watch the video</a>
+      </div>
+    </div>
+    <div class="sketch-panel reveal">
+      <img src="assets/carbosteps-sketch.png" alt="CarboSteps technical sketch">
+    </div>
+  </div>
+</section>
+
+<!-- CMS BLACK SECTION -->
+<section class="cms" id="tech">
+  <div class="cms-grid">
+    <div class="reveal">
+      <div class="kicker"><span class="dash"></span>Meet the</div>
+      <h2>Carbon Motion System™</h2>
+      <p>A patented mechanical architecture that works with your body, not against it.</p>
+      <div class="cms-rule"></div>
+      <div class="cms-tag">Built different.<br>Made to move.</div>
+    </div>
+    <div class="cms-visual img-slot reveal" data-label="add assets/cms-product.png&#10;(product render / studio shot)">
+      <img src="assets/cms-product.png" alt="Carbon Motion System product render" onerror="this.parentElement.classList.add('img-missing')">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="benefits">
+  <div class="feature-grid">
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M2 15 Q 8 9, 12 13 Q 16 17, 22 11"/></svg>
+      <h4>Dynamic Support</h4>
+      <p>Supports the arch and heel while keeping the forefoot free to move naturally.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M4 16 Q 10 8, 20 16"/><path d="M12 4v6M9 8l3-4 3 4"/></svg>
+      <h4>Energy Return</h4>
+      <p>Engineered to absorb impact and return energy with every step.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M12 2 C 8 8, 8 16, 12 22 C 14 16, 14 8, 12 2Z"/></svg>
+      <h4>Light &amp; Strong</h4>
+      <p>Carbon fiber design for maximum performance with minimal weight.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+      <h4>Calibrated to You</h4>
+      <p>Available in multiple stiffness levels to match your weight and walking style.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BIOMECHANICS (BETA: centered title, full-width image below) -->
+<section class="biomech">
+  <div class="biomech-header reveal">
+    <div class="kicker"><span class="dash"></span>Designed for movement</div>
+    <h3>Works with you, step after step.</h3>
+    <p class="lead">It absorbs the impact your heel and arch would otherwise carry alone — so the ache that meets you each morning has less and less to hold onto.</p>
+  </div>
+  <div class="biomech-visual img-slot light reveal" data-label="add assets/foot-biomechanics.png&#10;(gait / cross-section diagram)">
+    <img src="assets/foot-biomechanics.png" alt="Foot biomechanics diagram" onerror="this.parentElement.classList.add('img-missing')">
+  </div>
+  <div class="biomech-footer reveal">
+    <div class="steps">
+      <div class="step"><span class="n">1</span><div><h5>Heel strike</h5><p>Shock absorption and stability.</p></div></div>
+      <div class="step"><span class="n">2</span><div><h5>Mid stance</h5><p>Adaptive flex and energy storage.</p></div></div>
+      <div class="step"><span class="n">3</span><div><h5>Push off</h5><p>Energy return for forward motion.</p></div></div>
+    </div>
+    <a href="#" class="link-arrow">Learn how it works <span class="circ">→</span></a>
+  </div>
+</section>
+
+<!-- LONGEVITY (BETA: header split text/seal, stats back to plain text) -->
+<section class="longevity">
+  <div class="longevity-header reveal">
+    <div class="longevity-text">
+      <div class="kicker"><span class="dash"></span>Built to last</div>
+      <h3>Not foam. Not plastic. Aerospace-grade carbon fiber.</h3>
+      <p class="lead">While most insoles compress, crack, or lose their shape within months, CarboSteps is engineered from aerospace-grade carbon fiber — built to hold its shape and its function, step after step, year after year.</p>
+    </div>
+    <div class="longevity-seal">
+      <svg class="stamp-lg" viewBox="0 0 160 160" aria-label="2-Year Guarantee seal">
+        <defs>
+          <path id="stampRing" d="M 80,80 m -60,0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0" />
+        </defs>
+        <circle cx="80" cy="80" r="68" fill="none" stroke="var(--rouge)" stroke-width="1.4"></circle>
+        <circle cx="80" cy="80" r="52" fill="none" stroke="var(--rouge)" stroke-width="1"></circle>
+        <text font-family="'JetBrains Mono', monospace" font-size="8.5" letter-spacing="3" fill="var(--rouge)">
+          <textPath href="#stampRing" startOffset="2%">2-YEAR GUARANTEE • 2-YEAR GUARANTEE •</textPath>
+        </text>
+        <text x="80" y="76" text-anchor="middle" font-family="'DM Sans', sans-serif" font-weight="900" font-size="26" fill="var(--carbon)">2 YR</text>
+        <text x="80" y="94" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" fill="var(--anthracite)">GUARANTEE</text>
+      </svg>
+    </div>
+  </div>
+  <div class="longevity-stats reveal">
+    <div class="stat">
+      <div class="stat-rule"></div>
+      <div class="stat-value">Aerospace-grade</div>
+      <div class="stat-label">Carbon fiber construction — not foam, not plastic.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-rule"></div>
+      <div class="stat-value">2-Year Guarantee</div>
+      <div class="stat-label">Full coverage, because we've engineered it to last that long — and beyond.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-rule"></div>
+      <div class="stat-value">Zero Compression Set</div>
+      <div class="stat-label">It won't flatten, soften, or lose its function over time.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE (BETA: new band, requested — 3-month risk-free trial) -->
+<section class="guarantee">
+  <div class="guarantee-inner reveal">
+    <div class="kicker"><span class="dash"></span>Try it risk-free</div>
+    <h3>Try it. See for yourself.</h3>
+    <div class="guarantee-terms">3 months. Full refund. <span class="accent">No questions asked.</span></div>
+    <a href="#cta" class="guarantee-btn">Pre-order CarboSteps</a>
+  </div>
+</section>
+
+<!-- FINAL CTA (BETA: no photo — flat sand band) -->
+<section class="final" id="cta">
+  <div class="final-content">
+    <h2>Don't stop because it hurts.<span class="accent">Keep moving.</span></h2>
+    <a href="#" class="final-btn">Pre-order CarboSteps</a>
+  </div>
+</section>
+
+<footer id="faq">
+  <p class="fine">CarboSteps is an FDA Class I exempt device (21 CFR 890.3475). This product relieves fatigue and absorbs impact; it is not a medical treatment and does not claim to treat any specific condition.</p>
+  <div class="copy">© 2026 CarboSteps</div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
