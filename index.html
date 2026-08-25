@@ -104,19 +104,42 @@
   .nav-cta:hover{ background:var(--terracotta-dark); }
 
   /* ---------- HERO ---------- */
-  .hero{ padding:80px 48px 96px; }
-  @media(max-width:760px){ .hero{padding:56px 24px 64px;} }
-  .hero-grid{
-    display:grid; grid-template-columns:0.62fr 1.38fr; gap:56px; align-items:center;
-    max-width:1280px; margin:0 auto;
+  /* BETA 2026-08-25: full-bleed photo hero (was: text column + blueprint sketch panel).
+     Photo assets/lit.jpg — the frame's own empty left third (wall + floor) is the
+     "dedicated space" the copy sits in, reinforced by a scrim for contrast. */
+  .hero{ padding:0; }
+  .hero-media{
+    position:relative; width:100%; overflow:hidden;
+    min-height:640px; display:flex; align-items:center;
   }
-  @media(max-width:900px){ .hero-grid{grid-template-columns:1fr; gap:40px;} }
+  .hero-media > img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:35% 50%;
+  }
+  .hero-scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(90deg, rgba(20,15,10,.72) 0%, rgba(20,15,10,.48) 30%, rgba(20,15,10,.1) 55%, rgba(20,15,10,0) 70%);
+  }
+  .hero-copy{
+    position:relative; z-index:2; width:100%;
+    max-width:1280px; margin:0 auto; padding:64px 48px;
+  }
+  .hero-copy-inner{ max-width:440px; }
+  @media(max-width:760px){
+    .hero-media{ min-height:520px; align-items:flex-end; }
+    .hero-media > img{ object-position:30% 50%; }
+    .hero-scrim{ background:linear-gradient(180deg, rgba(20,15,10,.1) 0%, rgba(20,15,10,.8) 75%); }
+    .hero-copy{ padding:32px 24px 40px; }
+    .hero-copy-inner{ max-width:100%; }
+  }
   .hero h1{
     font-size:clamp(30px, 3.2vw, 42px); font-weight:700; letter-spacing:-0.01em; line-height:1.12;
+    color:var(--white); text-shadow:0 2px 20px rgba(0,0,0,.35);
   }
-  .hero h1 .fade{ display:block; color:var(--steel); font-weight:400; font-style:italic; margin-top:6px; }
+  .hero h1 .highlight{ color:var(--rouge); }
+  .hero h1 .fade{ display:block; color:rgba(255,255,255,.74); font-weight:400; font-style:italic; margin-top:6px; text-shadow:0 1px 12px rgba(0,0,0,.3); }
   .hero-rule{ width:36px; height:2px; background:var(--rouge); margin:18px 0; }
-  .hero-sub{ color:var(--anthracite); font-size:14px; max-width:340px; margin-bottom:26px; }
+  .hero-sub{ color:rgba(255,255,255,.86); font-size:14px; max-width:340px; margin-bottom:26px; }
   .hero-ctas{ display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
   .btn-primary{
     /* BETA: Discover the technology in sand-filled instead of carbon */
@@ -133,28 +156,8 @@
     width:24px; height:24px; border-radius:50%; border:1px solid var(--carbon);
     display:flex; align-items:center; justify-content:center; font-size:9px;
   }
-
-  /* sketch panel */
-  .sketch-panel{
-    position:relative;
-    background-color:var(--nearwhite);
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size:32px 32px;
-    padding:16px;
-  }
-  .sketch-panel img{ width:100%; mix-blend-mode:multiply; }
-  .sketch-annot{
-    font-family:'JetBrains Mono', monospace; font-size:10.5px;
-    line-height:1.8; letter-spacing:0.04em; color:var(--steel);
-    position:absolute;
-  }
-  .sketch-annot b{ display:block; color:var(--anthracite); }
-  .sa-tr{ top:24px; right:24px; text-align:right; }
-  .sa-bl{ bottom:24px; left:24px; }
-  .sa-br{ bottom:24px; right:24px; text-align:right; }
-  @media(max-width:600px){ .sketch-annot{ font-size:9px; } .sa-tr,.sa-bl,.sa-br{ position:static; text-align:left; margin-top:10px; } }
+  .hero .btn-text{ color:var(--white); }
+  .hero .btn-text .play{ border-color:var(--white); }
 
   .hero-wordmark{
     text-align:center; padding:56px 32px 88px;
@@ -314,18 +317,19 @@
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-grid">
-    <div class="reveal">
-      <h1>Every morning, the first step hurts.<span class="fade">It doesn't have to.</span></h1>
-      <div class="hero-rule"></div>
-      <p class="hero-sub">A different way to support every step. Engineered to return energy and reduce stress, so you can keep moving.</p>
-      <div class="hero-ctas">
-        <a href="#tech" class="btn-primary">Discover the technology</a>
-        <a href="#" class="btn-text"><span class="play">▶</span> Watch the video</a>
+  <div class="hero-media">
+    <img src="assets/lit.jpg" alt="Slippers on a warm wooden floor beside the bed, first thing in the morning">
+    <div class="hero-scrim"></div>
+    <div class="hero-copy">
+      <div class="hero-copy-inner reveal">
+        <h1>Every morning, the first step <span class="highlight">hurts</span>.<span class="fade">It doesn't have to.</span></h1>
+        <div class="hero-rule"></div>
+        <p class="hero-sub">A different way to support every step. Engineered to return energy and reduce stress, so you can keep moving.</p>
+        <div class="hero-ctas">
+          <a href="#tech" class="btn-primary">Discover the technology</a>
+          <a href="#" class="btn-text"><span class="play">▶</span> Watch the video</a>
+        </div>
       </div>
-    </div>
-    <div class="sketch-panel reveal">
-      <img src="assets/carbosteps-sketch.png" alt="CarboSteps technical sketch">
     </div>
   </div>
 </section>
