@@ -44,6 +44,7 @@
     border-bottom:1px solid rgba(26,26,26,0.07);
   }
   .nav-inner{
+    position:relative;
     display:flex; align-items:center; justify-content:space-between;
     padding:18px 48px; max-width:1280px; margin:0 auto;
   }
@@ -56,13 +57,37 @@
   .nav-links a{ transition:color .2s; }
   .nav-links a:hover{ color:var(--rouge); }
   .nav-links a.current{ color:var(--rouge); }
-  @media(max-width:860px){ .nav-links{display:none;} }
+  .nav-right{ display:flex; align-items:center; gap:20px; }
   .nav-cta{
     background:var(--terracotta); color:var(--white);
     font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
     padding:12px 24px; border-radius:2px; transition:background .2s;
   }
   .nav-cta:hover{ background:var(--terracotta-dark); }
+  /* BETA 2026-08-25: mobile menu — see index.html for the matching JS toggle */
+  .nav-toggle{
+    display:none; width:34px; height:34px; padding:0; margin:0;
+    border:0; background:transparent; cursor:pointer;
+    flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  }
+  .nav-toggle span{ display:block; width:22px; height:2px; background:var(--carbon); transition:transform .2s ease, opacity .2s ease; }
+  @media(max-width:860px){
+    .nav-toggle{ display:flex; }
+    .nav-links{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0;
+      background:var(--nearwhite);
+      border-bottom:1px solid rgba(26,26,26,0.07);
+      max-height:0; overflow:hidden; opacity:0;
+      transition:max-height .25s ease, opacity .2s ease;
+      pointer-events:none;
+    }
+    .nav-links a{ padding:16px 24px; border-top:1px solid rgba(26,26,26,0.06); }
+    nav.nav-open .nav-links{ max-height:320px; opacity:1; pointer-events:auto; }
+    nav.nav-open .nav-toggle span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+    nav.nav-open .nav-toggle span:nth-child(2){ opacity:0; }
+    nav.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  }
 
   /* ---------- KICKER (identical technique to index.html) ---------- */
   .kicker{
@@ -74,46 +99,45 @@
   .kicker .dash{ width:18px; height:1px; background:var(--rouge); }
 
   /* ---------- HERO ---------- */
-  .hero{ padding:80px 48px 96px; }
-  @media(max-width:760px){ .hero{padding:56px 24px 64px;} }
-  .hero-grid{
-    max-width:1180px; margin:0 auto;
-    display:grid; grid-template-columns:1.05fr 1fr; align-items:center; gap:8px;
-    text-align:left;
+  /* BETA 2026-08-25: full-bleed photo hero, same pattern as index.html —
+     was a 2-col grid with the photo overlapping into the text column and a
+     right-side fade. Photo assets/riviera.webp (was riviera.png). This photo
+     is bright/pale on its left (sky, haze) rather than dark, so the scrim
+     here is light-to-transparent with dark text, instead of index.html's
+     dark scrim + white text — same "surbrillance" technique, adapted to the
+     photo's own tonality. */
+  .hero{ padding:0; }
+  .hero-media{
+    position:relative; width:100%; overflow:hidden;
+    min-height:520px; display:flex; align-items:center;
   }
-  @media(max-width:860px){
-    .hero-grid{ grid-template-columns:1fr; gap:40px; text-align:center; }
-    .hero-media{ order:2; margin-left:0; }
+  .hero-media > img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:60% center;
   }
-  .hero-copy{ position:relative; z-index:2; }
+  .hero-scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(90deg, var(--nearwhite) 0%, rgba(250,250,249,.86) 28%, rgba(250,250,249,.32) 52%, rgba(250,250,249,0) 70%);
+  }
+  .hero-copy{
+    position:relative; z-index:2; width:100%;
+    max-width:1180px; margin:0 auto; padding:72px 48px;
+  }
+  .hero-copy-inner{ max-width:440px; }
+  @media(max-width:760px){
+    .hero-media{ min-height:440px; align-items:flex-end; }
+    .hero-media > img{ object-position:65% center; }
+    .hero-scrim{ background:linear-gradient(180deg, rgba(250,250,249,0) 0%, rgba(250,250,249,.62) 55%, var(--nearwhite) 88%); }
+    .hero-copy{ padding:28px 24px 36px; }
+    .hero-copy-inner{ max-width:100%; }
+  }
   .hero h1{
     font-size:clamp(24px, 2.6vw, 34px); font-weight:700; letter-spacing:-0.01em; line-height:1.15;
   }
   .hero h1 .accent{ color:var(--rouge); }
   .hero h1 .fade{ display:block; color:var(--steel); font-weight:400; font-style:italic; margin-top:6px; }
   .hero-rule{ width:36px; height:2px; background:var(--rouge); margin:18px 0; }
-  @media(max-width:860px){ .hero-rule{ margin:18px auto; } }
   .hero-sub{ color:var(--anthracite); font-size:15px; max-width:420px; }
-  @media(max-width:860px){ .hero-sub{ margin:0 auto; } }
-  .hero-media{
-    position:relative; z-index:1; border-radius:4px; overflow:hidden;
-    margin-left:-260px; height:360px;
-  }
-  .hero-media img{
-    width:100%; height:100%; object-fit:cover; display:block;
-  }
-  @media(max-width:860px){
-    .hero-media{ height:auto; }
-    .hero-media img{ height:auto; aspect-ratio:1535/1024; }
-  }
-  .hero-media::after{
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(to left, rgba(250,250,249,0) 42%, var(--nearwhite) 78%);
-    pointer-events:none;
-  }
-  @media(max-width:860px){
-    .hero-media::after{ background:linear-gradient(to top, rgba(250,250,249,0) 0%, var(--nearwhite) 100%); }
-  }
 
   /* ---------- NARRATIVE SECTIONS ---------- */
   .story-section h2 .accent{ color:var(--rouge); }
@@ -189,27 +213,33 @@
 <nav>
   <div class="nav-inner">
     <a href="index.html"><img src="assets/logo.png" alt="CarboSteps" class="nav-logo"></a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="index.html#tech">The Technology</a>
       <a href="index.html#benefits">Benefits</a>
       <a href="about.html" class="current">Our Story</a>
       <a href="contact.html">Contact</a>
     </div>
-    <a href="index.html#cta" class="nav-cta">Pre-order</a>
+    <div class="nav-right">
+      <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html#cta" class="nav-cta">Pre-order</a>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-grid">
-    <div class="hero-copy reveal">
-      <div class="kicker"><span class="dash"></span>Our story</div>
-      <h1>Born on the <span class="accent">Côte d&#39;Azur.</span></h1>
-      <div class="hero-rule"></div>
-      <p class="hero-sub">CarboSteps started in the French Riviera with one man who was determined to find a cure for his foot pain.</p>
-    </div>
-    <div class="hero-media reveal">
-      <img src="assets/riviera.png" alt="The Côte d'Azur coastline near Antibes, where CarboSteps began.">
+  <div class="hero-media">
+    <img src="assets/riviera.webp" alt="The Côte d'Azur coastline near Antibes, where CarboSteps began.">
+    <div class="hero-scrim"></div>
+    <div class="hero-copy">
+      <div class="hero-copy-inner reveal">
+        <div class="kicker"><span class="dash"></span>Our story</div>
+        <h1>Born on the <span class="accent">Côte d&#39;Azur.</span></h1>
+        <div class="hero-rule"></div>
+        <p class="hero-sub">CarboSteps started in the French Riviera with one man who was determined to find a cure for his foot pain.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -352,6 +382,28 @@
     entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
   }, {threshold:0.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // BETA 2026-08-25: mobile nav toggle
+  const navEl = document.querySelector('nav');
+  const navToggle = document.querySelector('.nav-toggle');
+  if(navToggle){
+    navToggle.addEventListener('click', ()=>{
+      const open = navEl.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a=>{
+      a.addEventListener('click', ()=>{
+        navEl.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+    window.addEventListener('resize', ()=>{
+      if(window.innerWidth > 860){
+        navEl.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 </script>
 
 </body>

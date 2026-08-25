@@ -44,6 +44,7 @@
     border-bottom:1px solid rgba(26,26,26,0.07);
   }
   .nav-inner{
+    position:relative;
     display:flex; align-items:center; justify-content:space-between;
     padding:18px 48px; max-width:1280px; margin:0 auto;
   }
@@ -56,13 +57,37 @@
   .nav-links a{ transition:color .2s; }
   .nav-links a:hover{ color:var(--rouge); }
   .nav-links a.current{ color:var(--rouge); }
-  @media(max-width:860px){ .nav-links{display:none;} }
+  .nav-right{ display:flex; align-items:center; gap:20px; }
   .nav-cta{
     background:var(--terracotta); color:var(--white);
     font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
     padding:12px 24px; border-radius:2px; transition:background .2s;
   }
   .nav-cta:hover{ background:var(--terracotta-dark); }
+  /* BETA 2026-08-25: mobile menu — see index.html for the matching JS toggle */
+  .nav-toggle{
+    display:none; width:34px; height:34px; padding:0; margin:0;
+    border:0; background:transparent; cursor:pointer;
+    flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  }
+  .nav-toggle span{ display:block; width:22px; height:2px; background:var(--carbon); transition:transform .2s ease, opacity .2s ease; }
+  @media(max-width:860px){
+    .nav-toggle{ display:flex; }
+    .nav-links{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0;
+      background:var(--nearwhite);
+      border-bottom:1px solid rgba(26,26,26,0.07);
+      max-height:0; overflow:hidden; opacity:0;
+      transition:max-height .25s ease, opacity .2s ease;
+      pointer-events:none;
+    }
+    .nav-links a{ padding:16px 24px; border-top:1px solid rgba(26,26,26,0.06); }
+    nav.nav-open .nav-links{ max-height:320px; opacity:1; pointer-events:auto; }
+    nav.nav-open .nav-toggle span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+    nav.nav-open .nav-toggle span:nth-child(2){ opacity:0; }
+    nav.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  }
 
   /* ---------- KICKER (identical technique to index.html) ---------- */
   .kicker{
@@ -127,13 +152,18 @@
 <nav>
   <div class="nav-inner">
     <a href="index.html"><img src="assets/logo.png" alt="CarboSteps" class="nav-logo"></a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="index.html#tech">The Technology</a>
       <a href="index.html#benefits">Benefits</a>
       <a href="about.html">Our Story</a>
       <a href="contact.html" class="current">Contact</a>
     </div>
-    <a href="index.html#cta" class="nav-cta">Pre-order</a>
+    <div class="nav-right">
+      <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html#cta" class="nav-cta">Pre-order</a>
+    </div>
   </div>
 </nav>
 
@@ -189,6 +219,28 @@
     entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
   }, {threshold:0.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // BETA 2026-08-25: mobile nav toggle
+  const navEl = document.querySelector('nav');
+  const navToggle = document.querySelector('.nav-toggle');
+  if(navToggle){
+    navToggle.addEventListener('click', ()=>{
+      const open = navEl.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a=>{
+      a.addEventListener('click', ()=>{
+        navEl.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+    window.addEventListener('resize', ()=>{
+      if(window.innerWidth > 860){
+        navEl.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 </script>
 
 </body>
