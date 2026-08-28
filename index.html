@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CarboSteps — Step into the future of comfort</title>
+<!--
+  index2.html — 2026-08-28. Variant of index.html for the customer-facing site.
+  Two differences from index.html:
+   1. It no longer enters through pain. The hero leads with the brand tagline
+      ("Step into the future of comfort.") and a desire/engineering angle, in the
+      spirit of the original holding page (08. site et visuels/site attente).
+   2. It is footwear-oriented: a new "From insole to shoe" band (.shoe, #footwear)
+      frames the CMS as a mechanism that starts as an insole and is being built
+      into the sole of a CarboSteps shoe. Asset: assets/carbosteps-shoe.jpg.
+  Funnel order is preserved (mechanism → freedom → proof); only the opening beat
+  changes. Tokens, nav, motion and footer are identical to index.html.
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -14,19 +26,10 @@
     --offwhite:#F2F2F0;
     --nearwhite:#FAFAF9;
     --white:#FFFFFF;
-    /* BETA: unified to the exact red used in the "Steps" half of the logo (#F60000) —
-       was #C41017. Applies everywhere --rouge is used: kickers, rules, accents. */
     --rouge:#F60000;
     --grid-line: rgba(26,26,26,0.06);
-    /* warm sand band background — BETA test, requested to replace the black
-       bandeaux on the CMS section and the final CTA section */
     --sand:#F2EBDC;
-    /* BETA: background for the "Works with you, step after step." band */
     --frame-light:#F9F6F0;
-    /* BETA: Pre-order CTA — was terracotta (#B5502E), now the exact same red
-       as --rouge / the logo's "Steps" red (#F60000), per Bruno's request that
-       every red on the site match the logo exactly. Dark variant is only for
-       the hover state (a flat hover would give no feedback). */
     --terracotta:#F60000;
     --terracotta-dark:#C20000;
   }
@@ -97,15 +100,11 @@
   .nav-links a:hover{ color:var(--rouge); }
   .nav-right{ display:flex; align-items:center; gap:20px; }
   .nav-cta{
-    /* BETA: Pre-order in terracotta instead of carbon */
     background:var(--terracotta); color:var(--white);
     font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
     padding:12px 24px; border-radius:2px; transition:background .2s;
   }
   .nav-cta:hover{ background:var(--terracotta-dark); }
-  /* BETA 2026-08-25: mobile menu — .nav-links used to just vanish (display:none)
-     below 860px with nothing to replace it. Now a hamburger (.nav-toggle) opens
-     it as a dropdown panel. */
   .nav-toggle{
     display:none; width:34px; height:34px; padding:0; margin:0;
     border:0; background:transparent; cursor:pointer;
@@ -131,9 +130,8 @@
   }
 
   /* ---------- HERO ---------- */
-  /* BETA 2026-08-25: full-bleed photo hero (was: text column + blueprint sketch panel).
-     Photo assets/lit.jpg — the frame's own empty left third (wall + floor) is the
-     "dedicated space" the copy sits in, reinforced by a scrim for contrast. */
+  /* Same full-bleed photo + directional scrim as index.html. The copy block is
+     slightly wider (480px) because the tagline runs longer than the pain hook. */
   .hero{ padding:0; }
   .hero-media{
     position:relative; width:100%; overflow:hidden;
@@ -151,7 +149,7 @@
     position:relative; z-index:2; width:100%;
     max-width:1280px; margin:0 auto; padding:64px 48px;
   }
-  .hero-copy-inner{ max-width:440px; }
+  .hero-copy-inner{ max-width:480px; }
   @media(max-width:760px){
     .hero-media{ min-height:520px; align-items:flex-end; }
     .hero-media > img{ object-position:30% 50%; }
@@ -166,10 +164,12 @@
   .hero h1 .highlight{ color:var(--rouge); }
   .hero h1 .fade{ display:block; color:rgba(255,255,255,.74); font-weight:400; font-style:italic; margin-top:6px; text-shadow:0 1px 12px rgba(0,0,0,.3); }
   .hero-rule{ width:36px; height:2px; background:var(--rouge); margin:18px 0; }
-  .hero-sub{ color:rgba(255,255,255,.86); font-size:14px; max-width:340px; margin-bottom:26px; }
+  .hero-sub{ color:rgba(255,255,255,.86); font-size:14px; max-width:360px; margin-bottom:26px; }
   .hero-ctas{ display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
+  /* hero kicker: same device as the section kickers, re-toned for the dark scrim */
+  .hero .kicker{ color:rgba(255,255,255,.82); margin-bottom:18px; }
+  .hero .kicker .dash{ background:var(--rouge); }
   .btn-primary{
-    /* BETA: Discover the technology in sand-filled instead of carbon */
     background:var(--sand); color:var(--carbon); border:1px solid var(--carbon);
     padding:14px 27px; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase;
     transition:all .2s;
@@ -186,13 +186,7 @@
   .hero .btn-text{ color:var(--white); }
   .hero .btn-text .play{ border-color:var(--white); }
 
-  .hero-wordmark{
-    text-align:center; padding:56px 32px 88px;
-    font-size:clamp(34px, 7vw, 76px); font-weight:700; letter-spacing:0.02em;
-  }
-  .hero-wordmark span{ color:var(--rouge); }
-
-  /* ---------- CMS SECTION (BETA: sand band, was black) ---------- */
+  /* ---------- CMS SECTION ---------- */
   .cms{
     background:var(--sand); color:var(--carbon);
     padding:110px 48px;
@@ -215,12 +209,32 @@
   .cms-note{ display:block; margin-top:10px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(26,26,26,0.45); }
   .cms-tag{ font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.05em; color:var(--rouge); line-height:1.9; text-transform:uppercase; font-weight:500; }
   .cms-visual{ aspect-ratio:16/11; }
-  /* BETA: this image slot no longer has the "light" class in the HTML, so it was
-     falling back to the dark placeholder style (black gradient + white dashed
-     border) — jarring inside the new sand section. Override it to match. */
   .cms .img-slot.img-missing::after{
     background:var(--frame-light); color:rgba(26,26,26,0.55); border-color:rgba(26,26,26,0.18);
   }
+
+  /* ---------- FROM INSOLE TO SHOE (index2 only) ----------
+     The CMS as a platform: insole now, shoe sole next. Nearwhite band so the
+     white-background render sits cleanly; separated from the features grid
+     below by the same hairline rule used elsewhere. */
+  .shoe{ padding:100px 48px; border-bottom:1px solid rgba(26,26,26,0.08); }
+  .shoe-grid{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:64px; align-items:center;
+    max-width:1180px; margin:0 auto;
+  }
+  @media(max-width:900px){ .shoe-grid{grid-template-columns:1fr; gap:40px;} }
+  .shoe-visual{ aspect-ratio:1536/1024; }
+  /* the render ships on a pure white ground; multiply drops that white into the
+     nearwhite band so the shoe floats instead of sitting in a visible box */
+  .shoe-visual img{ mix-blend-mode:multiply; }
+  .shoe h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:18px; letter-spacing:-0.01em; }
+  .shoe .lead{ color:var(--anthracite); font-size:15.5px; max-width:440px; margin-bottom:34px; }
+  .phase{ display:flex; gap:16px; align-items:baseline; padding:20px 0; border-top:1px solid rgba(26,26,26,0.08); max-width:440px; }
+  .phase:last-child{ border-bottom:1px solid rgba(26,26,26,0.08); }
+  .phase .n{ font-family:'JetBrains Mono', monospace; color:var(--rouge); font-size:12.5px; font-weight:600; letter-spacing:0.06em; }
+  .phase h5{ font-size:14px; font-weight:700; margin-bottom:4px; }
+  .phase p{ font-size:13.5px; color:var(--anthracite); }
+  .phase-note{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--steel); }
 
   /* ---------- FEATURES ---------- */
   .features{ padding:96px 48px; border-bottom:1px solid rgba(26,26,26,0.08); }
@@ -233,15 +247,12 @@
   .feature-item h4{ font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px; font-weight:700; }
   .feature-item p{ font-size:13.5px; color:var(--anthracite); max-width:220px; margin:0 auto; }
 
-  /* ---------- BIOMECHANICS (BETA: centered title, full-width image) ---------- */
+  /* ---------- BIOMECHANICS ---------- */
   .biomech{ padding:72px 48px 110px; background:var(--frame-light); }
   .biomech-header{ max-width:640px; margin:0 auto 48px; text-align:center; }
   .biomech-header .kicker{ justify-content:center; }
   .biomech h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:18px; letter-spacing:-0.01em; }
   .biomech-header p.lead{ color:var(--anthracite); font-size:15.5px; max-width:480px; margin:0 auto; }
-  /* BETA: foot-biomechanics.png is 1916×821 (ratio ~2.33:1) — now spans the
-     full section width below the centered title instead of sitting beside
-     the text in a side column. */
   .biomech-visual{ max-width:1280px; margin:0 auto 48px; aspect-ratio:1916/821; }
   .biomech-footer{ max-width:1280px; margin:0 auto; text-align:center; }
   .steps{ display:flex; flex-wrap:wrap; justify-content:center; gap:40px; margin-bottom:28px; }
@@ -252,9 +263,8 @@
   .link-arrow{ display:inline-flex; align-items:center; gap:10px; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; }
   .link-arrow .circ{ width:22px; height:22px; border-radius:50%; border:1px solid var(--carbon); display:flex; align-items:center; justify-content:center; font-size:9px; }
 
-  /* ---------- LONGEVITY (BETA: new band, material/durability story) ---------- */
+  /* ---------- LONGEVITY ---------- */
   .longevity{ padding:96px 48px; border-top:1px solid rgba(26,26,26,0.08); }
-  /* top half: text left, big seal right */
   .longevity-header{
     display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:center;
     max-width:1180px; margin:0 auto 72px;
@@ -263,9 +273,7 @@
   .longevity-text h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:18px; letter-spacing:-0.01em; }
   .longevity-text .lead{ color:var(--anthracite); font-size:15.5px; max-width:420px; margin:0; }
   .longevity-seal{ display:flex; justify-content:center; }
-  /* "en grand, 1:1" — large, square seal on the right of the header */
   .stamp-lg{ width:100%; max-width:280px; height:auto; aspect-ratio:1/1; transform:rotate(-8deg); }
-  /* bottom half: the 3 stats, back to plain text (no stamp) like before */
   .longevity-stats{
     display:grid; grid-template-columns:repeat(3,1fr); gap:40px;
     max-width:980px; margin:0 auto; text-align:left;
@@ -275,8 +283,7 @@
   .stat-value{ font-family:'JetBrains Mono', monospace; font-size:15px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600; color:var(--carbon); margin-bottom:8px; }
   .stat-label{ font-size:13.5px; color:var(--anthracite); line-height:1.55; max-width:230px; }
 
-  /* ---------- GUARANTEE (BETA: new band, requested — risk-reversal, same
-     color as the biomechanics band) ---------- */
+  /* ---------- GUARANTEE ---------- */
   .guarantee{ padding:80px 48px; background:var(--frame-light); text-align:center; }
   .guarantee-inner{ max-width:560px; margin:0 auto; }
   .guarantee .kicker{ justify-content:center; }
@@ -294,11 +301,8 @@
   }
   .guarantee-btn:hover{ background:var(--terracotta-dark); }
 
-  /* ---------- FINAL CTA (BETA: sand band, no photo) ---------- */
+  /* ---------- FINAL CTA ---------- */
   .final{
-    /* was min-height:70vh + flex align-items:flex-end, sized to anchor text
-       over a full-bleed photo. No photo now, so the band just hugs its
-       content instead of forcing a tall empty area above the text. */
     position:relative;
     color:var(--carbon); overflow:hidden; background:var(--sand);
   }
@@ -307,8 +311,6 @@
   .final h2{ font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.01em; }
   .final h2 .accent{ display:block; color:var(--rouge); font-style:italic; font-weight:500; margin-top:4px; }
   .final-btn{
-    /* BETA: matched to the exact same terracotta as the nav and guarantee
-       "Pre-order" buttons — was carbon-outline before. */
     display:inline-block; margin-top:36px;
     background:var(--terracotta); color:var(--white); border:1px solid var(--terracotta);
     padding:16px 32px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
@@ -336,6 +338,7 @@
     <div class="nav-links" id="nav-links">
       <a href="#tech">The Technology</a>
       <a href="#benefits">Benefits</a>
+      <a href="#footwear">The Shoe</a>
       <a href="about.html">Our Story</a>
       <a href="contact.html">Contact</a>
     </div>
@@ -348,16 +351,17 @@
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO — tagline entry, no pain hook -->
 <section class="hero" id="top">
   <div class="hero-media">
     <img src="assets/lit.jpg" alt="Slippers on a warm wooden floor beside the bed, first thing in the morning">
     <div class="hero-scrim"></div>
     <div class="hero-copy">
       <div class="hero-copy-inner reveal">
-        <h1>Every morning, the first step <span class="highlight">hurts</span>.<span class="fade">It doesn't have to.</span></h1>
+        <div class="kicker"><span class="dash"></span>Next-gen footwear</div>
+        <h1>Step into the <span class="highlight">future</span> of comfort.<span class="fade">It starts with the next step you take.</span></h1>
         <div class="hero-rule"></div>
-        <p class="hero-sub">A different way to support every step. Engineered to return energy and reduce stress, so you can keep moving.</p>
+        <p class="hero-sub">Carbon fiber, calibrated to your weight. A mechanism that stores the energy of each step and gives it back — first as an insole, then built into the shoe itself.</p>
         <div class="hero-ctas">
           <a href="#tech" class="btn-primary">Discover the technology</a>
           <a href="#" class="btn-text"><span class="play">▶</span> Watch the video</a>
@@ -367,7 +371,7 @@
   </div>
 </section>
 
-<!-- CMS BLACK SECTION -->
+<!-- CMS -->
 <section class="cms" id="tech">
   <div class="cms-grid">
     <div class="reveal">
@@ -379,6 +383,34 @@
     </div>
     <div class="cms-visual img-slot reveal" data-label="add assets/cms-product.png&#10;(product render / studio shot)">
       <img src="assets/cms-product.png" alt="Carbon Motion System product render" onerror="this.parentElement.classList.add('img-missing')">
+    </div>
+  </div>
+</section>
+
+<!-- FROM INSOLE TO SHOE -->
+<section class="shoe" id="footwear">
+  <div class="shoe-grid">
+    <div class="shoe-visual img-slot light reveal" data-label="add assets/carbosteps-shoe.jpg&#10;(shoe render — carbon blade visible in the sole)">
+      <img src="assets/carbosteps-shoe.jpg" alt="CarboSteps shoe with the carbon blade visible inside the midsole" onerror="this.parentElement.classList.add('img-missing')">
+    </div>
+    <div class="reveal">
+      <div class="kicker"><span class="dash"></span>What comes next</div>
+      <h3>The insole today. The shoe tomorrow.</h3>
+      <p class="lead">The Carbon Motion System is a mechanism, not a single product. It starts as an insole that drops into the shoes you already wear — and the same architecture is being engineered straight into the sole of a CarboSteps shoe.</p>
+      <div class="phase">
+        <span class="n">01</span>
+        <div>
+          <h5>The insole</h5>
+          <p>Heel and arch only, calibrated to your weight. Slides into the shoes already in your closet.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="n">02</span>
+        <div>
+          <h5>The shoe</h5>
+          <p>The same two-blade architecture built into the midsole and tuned as one piece with the shoe. <span class="phase-note">(in development)</span></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -409,12 +441,12 @@
   </div>
 </section>
 
-<!-- BIOMECHANICS (BETA: centered title, full-width image below) -->
+<!-- BIOMECHANICS -->
 <section class="biomech">
   <div class="biomech-header reveal">
     <div class="kicker"><span class="dash"></span>Designed for movement</div>
     <h3>Works with you, step after step.</h3>
-    <p class="lead">It absorbs the impact your heel and arch would otherwise carry alone — so the ache that meets you each morning has less and less to hold onto.</p>
+    <p class="lead">It takes the impact your heel and arch would otherwise carry alone, stores it, and hands it back as forward motion — so the end of the day feels closer to the start of it.</p>
   </div>
   <div class="biomech-visual img-slot light reveal" data-label="add assets/foot-biomechanics.png&#10;(gait / cross-section diagram)">
     <img src="assets/foot-biomechanics.png" alt="Foot biomechanics diagram" onerror="this.parentElement.classList.add('img-missing')">
@@ -429,7 +461,7 @@
   </div>
 </section>
 
-<!-- LONGEVITY (BETA: header split text/seal, stats back to plain text) -->
+<!-- LONGEVITY -->
 <section class="longevity">
   <div class="longevity-header reveal">
     <div class="longevity-text">
@@ -471,7 +503,7 @@
   </div>
 </section>
 
-<!-- GUARANTEE (BETA: new band, requested — 3-month risk-free trial) -->
+<!-- GUARANTEE -->
 <section class="guarantee">
   <div class="guarantee-inner reveal">
     <div class="kicker"><span class="dash"></span>Try it risk-free</div>
@@ -481,10 +513,10 @@
   </div>
 </section>
 
-<!-- FINAL CTA (BETA: no photo — flat sand band) -->
+<!-- FINAL CTA — short form of the locked closing (the full form names the pain) -->
 <section class="final" id="cta">
   <div class="final-content">
-    <h2>Don't stop because it hurts.<span class="accent">Keep moving.</span></h2>
+    <h2>Don't stop.<span class="accent">Keep moving.</span></h2>
     <a href="#" class="final-btn">Pre-order CarboSteps</a>
   </div>
 </section>
@@ -500,7 +532,7 @@
   }, {threshold:0.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // BETA 2026-08-25: mobile nav toggle
+  // mobile nav toggle (same script as index.html)
   const navEl = document.querySelector('nav');
   const navToggle = document.querySelector('.nav-toggle');
   if(navToggle){
