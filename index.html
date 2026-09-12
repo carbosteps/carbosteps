@@ -1,23 +1,33 @@
 <!DOCTYPE html>
+<!-- landing-d.html — PISTE D : la page "human-modern-hero-superpose" de Bruno (DM Serif Display + DM Sans, hero superposé),
+     avec les actifs de marque remis en place : logo sketch, sketch CMS réel, photos Côte d'Azur / dessin / trail, bande finale sable. 2026-09-12 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CarboSteps — Step into the future of comfort</title>
-<!--
-  index2.html — 2026-08-28. Variant of index.html for the customer-facing site.
-  Two differences from index.html:
-   1. It no longer enters through pain. The hero leads with the brand tagline
-      ("Step into the future of comfort.") and a desire/engineering angle, in the
-      spirit of the original holding page (08. site et visuels/site attente).
-   2. It is footwear-oriented: a new "From insole to shoe" band (.shoe, #footwear)
-      frames the CMS as a mechanism that starts as an insole and is being built
-      into the sole of a CarboSteps shoe. Asset: assets/carbosteps-shoe.jpg.
-  Funnel order is preserved (mechanism → freedom → proof); only the opening beat
-  changes. Tokens, nav, motion and footer are identical to index.html.
--->
+<title>CarboSteps — Human Modern · DM Serif Display + DM Sans</title>
+<meta name="description" content="Firm support that doesn't feel firm. CarboSteps carbon fiber insoles are calibrated to your weight and fit the shoes you already own. $299. Three months to decide.">
+<meta property="og:title" content="Every morning, the first step hurts. It doesn't have to.">
+<meta property="og:description" content="Carbon fiber insoles, calibrated to your weight. Three months to decide, two-year guarantee.">
+<meta property="og:type" content="product">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+<!--
+  landing.html — dedicated conversion page, created 2026-09-12.
+  Not a homepage: one primary objective (purchase), no site navigation, no
+  competing exits. Built on the same tokens as index.html so it reads as the
+  same brand, but the composition follows the sales-page guide rather than the
+  homepage rhythm.
+
+  Known dependency before this page can sell: there is no checkout. The button
+  in the #buy block is marked TODO and must be wired to the real cart/payment
+  URL. Sizes, weight brackets, shipping terms and return conditions are also
+  undefined and are deliberately NOT invented here.
+-->
+
 <style>
   :root{
     --carbon:#1A1A1A;
@@ -27,533 +37,801 @@
     --nearwhite:#FAFAF9;
     --white:#FFFFFF;
     --rouge:#F60000;
-    --grid-line: rgba(26,26,26,0.06);
+    --rouge-dark:#C20000;
     --sand:#F2EBDC;
     --frame-light:#F9F6F0;
-    --terracotta:#F60000;
-    --terracotta-dark:#C20000;
+    --hairline:rgba(26,26,26,0.10);
+    --hairline-soft:rgba(26,26,26,0.07);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; scroll-padding-top:78px;}
   body{
-    font-family:'DM Sans', sans-serif;
+    font-family:'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background:var(--nearwhite);
     color:var(--carbon);
-    line-height:1.5;
+    line-height:1.55;
     -webkit-font-smoothing:antialiased;
   }
-  .mono{font-family:'JetBrains Mono', monospace;}
-  a{color:inherit; text-decoration:none;}
   img{max-width:100%; display:block;}
-  .wrap{max-width:1280px; margin:0 auto; padding:0 48px;}
-  @media(max-width:760px){ .wrap{padding:0 24px;} }
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 48px;}
+  .narrow{max-width:860px; margin:0 auto; padding:0 48px;}
+  @media(max-width:760px){ .wrap, .narrow{padding:0 22px;} }
 
-  /* placeholder helper for images the user will supply */
-  .img-slot{ position:relative; overflow:hidden; }
-  .img-slot img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .img-slot.img-missing img{ display:none; }
-  .nav-inner .img-slot img{ object-fit:contain; object-position:left center; }
-  .img-slot.img-missing::after{
-    content:attr(data-label);
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    text-align:center; padding:24px;
-    font-family:'JetBrains Mono', monospace; font-size:11.5px;
-    letter-spacing:0.06em; line-height:1.7;
-    background:
-      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(150deg,#2b2b2b,#141414);
-    background-size:20px 20px, 20px 20px, cover;
-    color:rgba(255,255,255,0.55);
-    border:1px dashed rgba(255,255,255,0.2);
-  }
-  .img-slot.light.img-missing::after{
-    background:
-      linear-gradient(rgba(26,26,26,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(26,26,26,0.05) 1px, transparent 1px),
-      var(--offwhite);
-    background-size:20px 20px, 20px 20px, cover;
-    color:var(--steel);
-    border:1px dashed rgba(26,26,26,0.18);
-  }
+  :focus-visible{ outline:2px solid var(--rouge); outline-offset:3px; }
 
-  /* ---------- NAV ---------- */
-  nav{
-    position:sticky; top:0; z-index:100;
-    background:rgba(250,250,249,0.9);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(26,26,26,0.07);
-  }
-  .nav-inner{
-    position:relative;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:18px 48px; max-width:1280px; margin:0 auto;
-  }
-  @media(max-width:760px){ .nav-inner{padding:16px 24px;} }
-  .nav-logo{ height:26px; width:auto; display:block; }
-  .nav-links{
-    display:flex; gap:40px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+  /* ---------- shared devices (from the site system) ---------- */
+  .kicker{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
     color:var(--anthracite);
+    display:flex; align-items:center; gap:10px; margin-bottom:18px;
   }
-  .nav-links a{ transition:color .2s; }
-  .nav-links a:hover{ color:var(--rouge); }
-  .nav-right{ display:flex; align-items:center; gap:20px; }
-  .nav-cta{
-    background:var(--terracotta); color:var(--white);
-    font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
-    padding:12px 24px; border-radius:2px; transition:background .2s;
+  .kicker::before{ content:""; width:18px; height:2px; background:var(--rouge); flex:0 0 auto; }
+  .kicker.center{ justify-content:center; }
+
+  h2{ font-size:clamp(27px, 3.4vw, 40px); font-weight:900; letter-spacing:-0.02em; line-height:1.12; text-wrap:balance; }
+  h3{ font-size:clamp(22px, 2.5vw, 29px); font-weight:700; letter-spacing:-0.015em; line-height:1.2; text-wrap:balance; }
+  h4{ font-size:17px; font-weight:700; letter-spacing:-0.005em; }
+  .lead{ font-size:17.5px; color:var(--anthracite); max-width:62ch; margin-top:16px; }
+  .accent{ color:var(--rouge); }
+
+  section{ padding:96px 0; }
+  section.sand{ background:var(--sand); }
+  section.frame{ background:var(--frame-light); }
+  section.ruled{ border-top:1px solid var(--hairline-soft); }
+  @media(max-width:760px){ section{ padding:68px 0; } }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:baseline; gap:10px; white-space:nowrap;
+    background:var(--rouge); color:var(--white);
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:12.5px; letter-spacing:0.09em; text-transform:uppercase; font-weight:500;
+    padding:16px 28px; border-radius:2px; border:0; cursor:pointer;
+    transition:background .2s;
   }
-  .nav-cta:hover{ background:var(--terracotta-dark); }
-  .nav-toggle{
-    display:none; width:34px; height:34px; padding:0; margin:0;
-    border:0; background:transparent; cursor:pointer;
-    flex-direction:column; align-items:center; justify-content:center; gap:5px;
-  }
-  .nav-toggle span{ display:block; width:22px; height:2px; background:var(--carbon); transition:transform .2s ease, opacity .2s ease; }
-  @media(max-width:860px){
-    .nav-toggle{ display:flex; }
-    .nav-links{
-      position:absolute; top:100%; left:0; right:0;
-      flex-direction:column; gap:0;
-      background:var(--nearwhite);
-      border-bottom:1px solid rgba(26,26,26,0.07);
-      max-height:0; overflow:hidden; opacity:0;
-      transition:max-height .25s ease, opacity .2s ease;
-      pointer-events:none;
-    }
-    .nav-links a{ padding:16px 24px; border-top:1px solid rgba(26,26,26,0.06); }
-    nav.nav-open .nav-links{ max-height:320px; opacity:1; pointer-events:auto; }
-    nav.nav-open .nav-toggle span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
-    nav.nav-open .nav-toggle span:nth-child(2){ opacity:0; }
-    nav.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  .btn:hover{ background:var(--rouge-dark); }
+  .btn .price{ font-weight:600; letter-spacing:0.05em; opacity:.85; }
+  .btn.lg{ padding:19px 36px; font-size:13.5px; }
+  .btn-note{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:11px; letter-spacing:0.06em; color:var(--steel);
+    margin-top:14px;
   }
 
-  /* ---------- HERO ---------- */
-  /* Same full-bleed photo + directional scrim as index.html. The copy block is
-     slightly wider (480px) because the tagline runs longer than the pain hook. */
-  .hero{ padding:0; }
-  .hero-media{
-    position:relative; width:100%; overflow:hidden;
-    min-height:640px; display:flex; align-items:center;
+  /* ---------- header ---------- */
+  header.bar{
+    position:sticky; top:0; z-index:100;
+    background:rgba(250,250,249,0.93);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hairline-soft);
   }
+  .bar-inner{
+    max-width:1180px; margin:0 auto; padding:15px 48px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+  }
+  @media(max-width:760px){ .bar-inner{ padding:12px 22px; } }
+  .bar-logo{ height:24px; width:auto; }
+  .bar-right{ display:flex; align-items:center; gap:22px; }
+  .bar-terms{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:11px; letter-spacing:0.06em; color:var(--steel);
+  }
+  @media(max-width:860px){ .bar-terms{ display:none; } }
+  header.bar .btn{ padding:12px 20px; font-size:11.5px; }
+
+  /* ---------- hero ---------- */
+  .hero{ position:relative; }
+  /* Dark ground under the photo: the hero copy is white, so if lit.jpg ever
+     fails to load the text still has something to sit on. */
+  .hero-media{ position:relative; min-height:660px; display:flex; background:#1B1410; }
   .hero-media > img{
     position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:35% 50%;
+    object-fit:cover; object-position:38% 50%;
   }
   .hero-scrim{
     position:absolute; inset:0;
-    background:linear-gradient(90deg, rgba(20,15,10,.72) 0%, rgba(20,15,10,.48) 30%, rgba(20,15,10,.1) 55%, rgba(20,15,10,0) 70%);
+    background:linear-gradient(90deg, rgba(18,13,9,.80) 0%, rgba(18,13,9,.66) 38%, rgba(18,13,9,0) 74%);
   }
-  .hero-copy{
-    position:relative; z-index:2; width:100%;
-    max-width:1280px; margin:0 auto; padding:64px 48px;
-  }
-  .hero-copy-inner{ max-width:480px; }
-  @media(max-width:760px){
-    .hero-media{ min-height:520px; align-items:flex-end; }
-    .hero-media > img{ object-position:30% 50%; }
-    .hero-scrim{ background:linear-gradient(180deg, rgba(20,15,10,.1) 0%, rgba(20,15,10,.8) 75%); }
-    .hero-copy{ padding:32px 24px 40px; }
-    .hero-copy-inner{ max-width:100%; }
-  }
+  .hero-copy{ position:relative; z-index:2; width:100%; display:flex; align-items:center; padding:72px 48px; }
+  .hero-inner{ max-width:1180px; margin:0 auto; width:100%; }
+  .hero-block{ max-width:540px; }
+  .hero .kicker{ color:rgba(255,255,255,.80); }
   .hero h1{
-    font-size:clamp(30px, 3.2vw, 42px); font-weight:700; letter-spacing:-0.01em; line-height:1.12;
-    color:var(--white); text-shadow:0 2px 20px rgba(0,0,0,.35);
+    color:var(--white);
+    font-size:clamp(32px, 4.6vw, 54px);
+    font-weight:900; letter-spacing:-0.028em; line-height:1.04;
+    text-wrap:balance;
   }
-  .hero h1 .highlight{ color:var(--rouge); }
-  .hero h1 .fade{ display:block; color:rgba(255,255,255,.74); font-weight:400; font-style:italic; margin-top:6px; text-shadow:0 1px 12px rgba(0,0,0,.3); }
-  .hero-rule{ width:36px; height:2px; background:var(--rouge); margin:18px 0; }
-  .hero-sub{ color:rgba(255,255,255,.86); font-size:14px; max-width:360px; margin-bottom:26px; }
-  .hero-ctas{ display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
-  /* hero kicker: same device as the section kickers, re-toned for the dark scrim */
-  .hero .kicker{ color:rgba(255,255,255,.82); margin-bottom:18px; }
-  .hero .kicker .dash{ background:var(--rouge); }
-  .btn-primary{
-    background:var(--sand); color:var(--carbon); border:1px solid var(--carbon);
-    padding:14px 27px; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase;
-    transition:all .2s;
-  }
-  .btn-primary:hover{ background:var(--rouge); color:var(--white); border-color:var(--rouge); }
-  .btn-text{
-    display:inline-flex; align-items:center; gap:10px;
-    font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--carbon);
-  }
-  .btn-text .play{
-    width:24px; height:24px; border-radius:50%; border:1px solid var(--carbon);
-    display:flex; align-items:center; justify-content:center; font-size:9px;
-  }
-  .hero .btn-text{ color:var(--white); }
-  .hero .btn-text .play{ border-color:var(--white); }
-
-  /* ---------- CMS SECTION ---------- */
-  .cms{
-    background:var(--sand); color:var(--carbon);
-    padding:110px 48px;
-  }
-  .cms-grid{
-    display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px; align-items:center;
-    max-width:1280px; margin:0 auto;
-  }
-  @media(max-width:900px){ .cms-grid{grid-template-columns:1fr; gap:44px;} }
-  .kicker{
-    display:flex; align-items:center; gap:10px;
-    font-family:'JetBrains Mono', monospace; font-size:11.5px;
-    letter-spacing:0.14em; text-transform:uppercase; color:var(--rouge);
-    margin-bottom:20px;
-  }
-  .kicker .dash{ width:18px; height:1px; background:var(--rouge); }
-  .cms h2{ font-size:clamp(28px,3.4vw,42px); font-weight:700; margin-bottom:20px; letter-spacing:-0.01em; }
-  .cms p{ color:rgba(26,26,26,0.65); font-size:15.5px; max-width:360px; margin-bottom:30px; }
-  .cms-rule{ width:36px; height:1px; background:rgba(26,26,26,0.18); margin-bottom:24px; }
-  .cms-note{ display:block; margin-top:10px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(26,26,26,0.45); }
-  .cms-tag{ font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.05em; color:var(--rouge); line-height:1.9; text-transform:uppercase; font-weight:500; }
-  .cms-visual{ aspect-ratio:16/11; }
-  .cms .img-slot.img-missing::after{
-    background:var(--frame-light); color:rgba(26,26,26,0.55); border-color:rgba(26,26,26,0.18);
+  .hero h1 .hit{ color:var(--rouge); }
+  .hero h1 .soft{ display:block; font-weight:400; font-style:italic; color:rgba(255,255,255,.90); margin-top:6px; }
+  .hero-rule{ width:40px; height:2px; background:var(--rouge); margin:26px 0 22px; }
+  .hero-sub{ color:rgba(255,255,255,.88); font-size:17px; max-width:42ch; }
+  .hero-ctas{ margin-top:32px; display:flex; flex-wrap:wrap; align-items:center; gap:18px 22px; }
+  .hero-ctas .btn-note{ color:rgba(255,255,255,.68); margin-top:0; }
+  /* Mobile: the scrim can't hold legible white copy over a 320px-tall crop, so
+     the hero splits — photo on top, copy below on the page ground in carbon.
+     No overlap, no negative margins, nothing depending on where the photo is dark. */
+  @media(max-width:760px){
+    .hero-media{ min-height:0; display:block; }
+    .hero-media > img{ position:relative; width:100%; height:300px; object-position:42% 50%; }
+    .hero-scrim{ inset:0 0 auto 0; height:300px;
+      background:linear-gradient(180deg, rgba(18,13,9,.34) 0%, rgba(18,13,9,.10) 100%); }
+    .hero-copy{ position:relative; display:block; padding:34px 0 4px; }
+    .hero-inner{ padding:0 22px; }
+    .hero-block{ max-width:none; }
+    .hero .kicker{ color:var(--anthracite); }
+    .hero h1{ font-size:clamp(30px, 8vw, 38px); color:var(--carbon); }
+    .hero h1 .soft{ color:var(--anthracite); }
+    .hero-rule{ margin:20px 0 18px; }
+    .hero-sub{ color:var(--anthracite); font-size:16px; max-width:none; }
+    .hero-ctas{ margin-top:26px; }
+    .hero-ctas .btn-note{ color:var(--steel); }
   }
 
-  /* ---------- FROM INSOLE TO SHOE (index2 only) ----------
-     The CMS as a platform: insole now, shoe sole next. Nearwhite band so the
-     white-background render sits cleanly; separated from the features grid
-     below by the same hairline rule used elsewhere. */
-  .shoe{ padding:100px 48px; border-bottom:1px solid rgba(26,26,26,0.08); }
-  .shoe-grid{
-    display:grid; grid-template-columns:1.05fr 0.95fr; gap:64px; align-items:center;
-    max-width:1180px; margin:0 auto;
+  /* ---------- trust strip ---------- */
+  .strip{ border-bottom:1px solid var(--hairline-soft); background:var(--white); }
+  .strip-grid{
+    max-width:1180px; margin:0 auto; padding:0 48px;
+    display:grid; grid-template-columns:repeat(4, 1fr);
   }
-  @media(max-width:900px){ .shoe-grid{grid-template-columns:1fr; gap:40px;} }
-  .shoe-visual{ aspect-ratio:1536/1024; }
-  /* the render ships on a pure white ground; multiply drops that white into the
-     nearwhite band so the shoe floats instead of sitting in a visible box */
-  .shoe-visual img{ mix-blend-mode:multiply; }
-  .shoe h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:18px; letter-spacing:-0.01em; }
-  .shoe .lead{ color:var(--anthracite); font-size:15.5px; max-width:440px; margin-bottom:34px; }
-  .phase{ display:flex; gap:16px; align-items:baseline; padding:20px 0; border-top:1px solid rgba(26,26,26,0.08); max-width:440px; }
-  .phase:last-child{ border-bottom:1px solid rgba(26,26,26,0.08); }
-  .phase .n{ font-family:'JetBrains Mono', monospace; color:var(--rouge); font-size:12.5px; font-weight:600; letter-spacing:0.06em; }
-  .phase h5{ font-size:14px; font-weight:700; margin-bottom:4px; }
-  .phase p{ font-size:13.5px; color:var(--anthracite); }
-  .phase-note{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--steel); }
+  .strip-item{
+    padding:22px 24px 22px 0;
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:11.5px; letter-spacing:0.05em; color:var(--anthracite);
+    display:flex; align-items:flex-start; gap:10px;
+  }
+  .strip-item::before{ content:""; width:8px; height:1.5px; background:var(--rouge); margin-top:9px; flex:0 0 auto; }
+  @media(max-width:860px){ .strip-grid{ grid-template-columns:repeat(2,1fr); padding:0 22px; } }
+  @media(max-width:460px){ .strip-grid{ grid-template-columns:1fr; } .strip-item{ padding:13px 0; } }
 
-  /* ---------- FEATURES ---------- */
-  .features{ padding:96px 48px; border-bottom:1px solid rgba(26,26,26,0.08); }
-  .feature-grid{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:40px;
-    max-width:1180px; margin:0 auto; text-align:center;
+  /* ---------- recognition ---------- */
+  .cost-list{ margin-top:36px; display:grid; grid-template-columns:repeat(2,1fr); gap:2px 48px; max-width:820px; }
+  @media(max-width:700px){ .cost-list{ grid-template-columns:1fr; } }
+  .cost-list li{ list-style:none; padding:13px 0; border-bottom:1px solid var(--hairline-soft); color:var(--anthracite); font-size:16px; }
+  .pull{
+    margin-top:48px; padding:32px 0 0; border-top:2px solid var(--carbon);
+    max-width:760px;
   }
-  @media(max-width:760px){ .feature-grid{grid-template-columns:1fr 1fr; row-gap:48px;} }
-  .feature-icon{ width:34px; height:34px; margin:0 auto 22px; stroke:var(--carbon); }
-  .feature-item h4{ font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:12px; font-weight:700; }
-  .feature-item p{ font-size:13.5px; color:var(--anthracite); max-width:220px; margin:0 auto; }
+  .pull p{ font-size:clamp(20px, 2.5vw, 27px); font-weight:700; letter-spacing:-0.015em; line-height:1.3; text-wrap:balance; }
 
-  /* ---------- BIOMECHANICS ---------- */
-  .biomech{ padding:72px 48px 110px; background:var(--frame-light); }
-  .biomech-header{ max-width:640px; margin:0 auto 48px; text-align:center; }
-  .biomech-header .kicker{ justify-content:center; }
-  .biomech h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:18px; letter-spacing:-0.01em; }
-  .biomech-header p.lead{ color:var(--anthracite); font-size:15.5px; max-width:480px; margin:0 auto; }
-  .biomech-visual{ max-width:1280px; margin:0 auto 48px; aspect-ratio:1916/821; }
-  .biomech-footer{ max-width:1280px; margin:0 auto; text-align:center; }
-  .steps{ display:flex; flex-wrap:wrap; justify-content:center; gap:40px; margin-bottom:28px; }
-  .step{ display:flex; gap:16px; align-items:baseline; max-width:260px; text-align:left; }
-  .step .n{ font-family:'JetBrains Mono', monospace; color:var(--rouge); font-size:13px; font-weight:600; }
-  .step div h5{ font-size:14px; font-weight:700; margin-bottom:3px; }
-  .step div p{ font-size:13.5px; color:var(--anthracite); }
-  .link-arrow{ display:inline-flex; align-items:center; gap:10px; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; }
-  .link-arrow .circ{ width:22px; height:22px; border-radius:50%; border:1px solid var(--carbon); display:flex; align-items:center; justify-content:center; font-size:9px; }
+  /* ---------- compromise ---------- */
+  .tried{ margin-top:44px; display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--carbon); }
+  @media(max-width:860px){ .tried{ grid-template-columns:1fr; } }
+  .tried-col{ padding:28px 32px 32px 0; border-right:1px solid var(--hairline-soft); }
+  .tried-col:last-child{ border-right:0; }
+  @media(max-width:860px){
+    .tried-col{ border-right:0; border-bottom:1px solid var(--hairline-soft); padding:26px 0; }
+    .tried-col:last-child{ border-bottom:0; }
+  }
+  .tried-col .num{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:11px; letter-spacing:0.1em; color:var(--steel); display:block; margin-bottom:14px;
+  }
+  .tried-col h4{ margin-bottom:14px; }
+  .tried-col dl{ display:grid; gap:12px; }
+  .tried-col dt{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--steel); margin-bottom:3px;
+  }
+  .tried-col dd{ font-size:15px; color:var(--anthracite); }
+  .verdict{
+    margin-top:44px; padding:30px 34px; background:var(--carbon); color:var(--nearwhite);
+    max-width:760px; border-radius:2px;
+  }
+  .verdict p{ font-size:clamp(18px,2.1vw,23px); font-weight:700; letter-spacing:-0.01em; line-height:1.32; text-wrap:balance; }
+  .verdict .accent{ color:#FF4136; }
 
-  /* ---------- LONGEVITY ---------- */
-  .longevity{ padding:96px 48px; border-top:1px solid rgba(26,26,26,0.08); }
-  .longevity-header{
-    display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:center;
-    max-width:1180px; margin:0 auto 72px;
+  /* ---------- mechanism ---------- */
+  .mech-grid{ display:grid; grid-template-columns:1fr 1.15fr; gap:64px; align-items:center; }
+  @media(max-width:900px){ .mech-grid{ grid-template-columns:1fr; gap:40px; } }
+  .mech-visual{ background:var(--white); border:1px solid var(--hairline-soft); border-radius:2px; padding:22px; }
+  .mech-visual img{ width:100%; }
+  .mech-caption{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--steel);
+    margin-top:14px; padding-top:12px; border-top:1px solid var(--hairline-soft);
   }
-  @media(max-width:900px){ .longevity-header{grid-template-columns:1fr; gap:36px; text-align:left;} }
-  .longevity-text h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:18px; letter-spacing:-0.01em; }
-  .longevity-text .lead{ color:var(--anthracite); font-size:15.5px; max-width:420px; margin:0; }
-  .longevity-seal{ display:flex; justify-content:center; }
-  .stamp-lg{ width:100%; max-width:280px; height:auto; aspect-ratio:1/1; transform:rotate(-8deg); }
-  .longevity-stats{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:40px;
-    max-width:980px; margin:0 auto; text-align:left;
+  .mech-points{ margin-top:30px; display:grid; gap:18px; }
+  .mech-points li{ list-style:none; display:grid; grid-template-columns:26px 1fr; gap:14px; align-items:start; }
+  .mech-points .mk{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:11px; color:var(--rouge); font-weight:600; padding-top:3px;
   }
-  @media(max-width:760px){ .longevity-stats{grid-template-columns:1fr; gap:32px;} }
-  .stat-rule{ width:28px; height:1px; background:var(--rouge); margin-bottom:16px; }
-  .stat-value{ font-family:'JetBrains Mono', monospace; font-size:15px; letter-spacing:0.06em; text-transform:uppercase; font-weight:600; color:var(--carbon); margin-bottom:8px; }
-  .stat-label{ font-size:13.5px; color:var(--anthracite); line-height:1.55; max-width:230px; }
+  .mech-points p{ color:var(--anthracite); font-size:15.5px; }
+  .mech-points strong{ color:var(--carbon); font-weight:700; }
 
-  /* ---------- GUARANTEE ---------- */
-  .guarantee{ padding:80px 48px; background:var(--frame-light); text-align:center; }
-  .guarantee-inner{ max-width:560px; margin:0 auto; }
-  .guarantee .kicker{ justify-content:center; }
-  .guarantee h3{ font-size:clamp(26px,3.2vw,38px); font-weight:700; margin-bottom:14px; letter-spacing:-0.01em; }
-  .guarantee-terms{
-    font-family:'JetBrains Mono', monospace; font-size:14.5px; letter-spacing:0.05em;
-    text-transform:uppercase; color:var(--anthracite);
+  .gait{ margin-top:72px; padding-top:44px; border-top:1px solid var(--hairline); display:grid; grid-template-columns:repeat(3,1fr); gap:40px; }
+  @media(max-width:760px){ .gait{ grid-template-columns:1fr; gap:32px; } }
+  .gait-step svg{ width:100%; height:auto; display:block; margin-bottom:18px; }
+  .gait-step .st{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--rouge); margin-bottom:8px;
   }
-  .guarantee-terms .accent{ color:var(--rouge); font-weight:600; }
-  .guarantee-btn{
-    display:inline-block; margin-top:32px;
-    background:var(--terracotta); color:var(--white);
-    padding:15px 30px; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase;
-    border-radius:2px; transition:background .2s;
-  }
-  .guarantee-btn:hover{ background:var(--terracotta-dark); }
+  .gait-step p{ color:var(--anthracite); font-size:15px; margin-top:6px; }
 
-  /* ---------- FINAL CTA ---------- */
-  .final{
-    position:relative;
-    color:var(--carbon); overflow:hidden; background:var(--sand);
+  .quote{ margin-top:72px; padding-top:40px; border-top:1px solid var(--hairline); max-width:720px; }
+  .quote blockquote{ font-size:clamp(20px,2.4vw,26px); font-weight:700; font-style:italic; letter-spacing:-0.015em; line-height:1.3; text-wrap:balance; }
+  .quote cite{
+    display:block; margin-top:16px; font-style:normal;
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--steel);
   }
-  .final-content{ position:relative; z-index:2; padding:80px 48px; max-width:1280px; margin:0 auto; width:100%; }
-  @media(max-width:760px){ .final-content{padding:56px 24px;} }
-  .final h2{ font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.01em; }
-  .final h2 .accent{ display:block; color:var(--rouge); font-style:italic; font-weight:500; margin-top:4px; }
-  .final-btn{
-    display:inline-block; margin-top:36px;
-    background:var(--terracotta); color:var(--white); border:1px solid var(--terracotta);
-    padding:16px 32px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
-    transition:all .25s;
+
+  /* ---------- calibration ---------- */
+  .cal-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+  @media(max-width:900px){ .cal-grid{ grid-template-columns:1fr; gap:36px; } }
+  .scale{ display:grid; gap:0; border-top:1px solid var(--carbon); }
+  .scale-row{
+    display:grid; grid-template-columns:88px 1fr; gap:20px; align-items:center;
+    padding:17px 0; border-bottom:1px solid var(--hairline-soft);
   }
-  .final-btn:hover{ background:var(--terracotta-dark); border-color:var(--terracotta-dark); }
+  .scale-row .lv{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--steel);
+  }
+  .scale-bar{ height:6px; background:rgba(26,26,26,0.08); border-radius:3px; overflow:hidden; }
+  .scale-bar span{ display:block; height:100%; background:var(--rouge); }
 
-  /* ---------- FOOTER ---------- */
-  footer{ background:var(--carbon); color:rgba(255,255,255,0.5); padding:48px; text-align:center; }
-  footer .fine{ font-size:11px; max-width:560px; margin:0 auto 16px; line-height:1.7; }
-  footer .copy{ font-size:11px; font-family:'JetBrains Mono', monospace; }
+  /* ---------- freedom ---------- */
+  .free-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:48px; }
+  @media(max-width:760px){ .free-grid{ grid-template-columns:1fr; } }
+  .free-shot{ position:relative; border-radius:2px; overflow:hidden; aspect-ratio:458/821; max-height:520px; }
+  .free-shot img{ width:100%; height:100%; object-fit:cover; }
+  .free-copy{ margin-top:40px; max-width:62ch; }
+  .free-copy p + p{ margin-top:16px; }
+  .identity{
+    margin-top:44px; font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--rouge);
+  }
 
-  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
-  .reveal.in{ opacity:1; transform:translateY(0); }
-  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+  /* ---------- proof ---------- */
+  .proof-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:64px; align-items:center; }
+  @media(max-width:900px){ .proof-grid{ grid-template-columns:1fr; gap:40px; } }
+  .proof-list{ display:grid; gap:0; border-top:1px solid var(--carbon); margin-top:30px; }
+  .proof-list > div{ padding:19px 0; border-bottom:1px solid var(--hairline-soft); display:grid; grid-template-columns:150px 1fr; gap:22px; }
+  @media(max-width:600px){ .proof-list > div{ grid-template-columns:1fr; gap:5px; } }
+  .proof-list dt{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--steel); padding-top:3px;
+  }
+  .proof-list dd{ font-size:15.5px; color:var(--anthracite); }
+  .proof-list dd strong{ color:var(--carbon); }
+  .proof-visual img{ border-radius:2px; }
+  .proof-sketch{ margin-top:22px; background:var(--white); border:1px solid var(--hairline-soft); border-radius:2px; padding:20px 24px; }
+
+  /* ---------- offer ---------- */
+  .offer-grid{ display:grid; grid-template-columns:1fr 0.85fr; gap:72px; align-items:start; }
+  @media(max-width:900px){ .offer-grid{ grid-template-columns:1fr; gap:44px; } }
+  .price-block{ display:flex; align-items:baseline; gap:14px; margin-top:26px; }
+  .price-block .amt{ font-size:clamp(42px,5.5vw,60px); font-weight:900; letter-spacing:-0.035em; line-height:1; }
+  .price-block .cur{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:12px; letter-spacing:0.1em; color:var(--steel);
+  }
+  .includes{ margin-top:32px; display:grid; gap:0; border-top:1px solid var(--hairline); }
+  .includes li{ list-style:none; padding:14px 0; border-bottom:1px solid var(--hairline-soft); display:grid; grid-template-columns:20px 1fr; gap:12px; font-size:15.5px; color:var(--anthracite); }
+  .includes li::before{ content:"—"; color:var(--rouge); font-weight:700; }
+  .includes strong{ color:var(--carbon); font-weight:700; }
+  .offer-cta{ margin-top:38px; }
+
+  .terms-card{ background:var(--white); border:1px solid var(--hairline); border-radius:2px; padding:30px 32px; }
+  .terms-card + .terms-card{ margin-top:20px; }
+  .terms-card .tag{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--rouge); margin-bottom:12px;
+  }
+  .terms-card h4{ margin-bottom:10px; }
+  .terms-card p{ font-size:15px; color:var(--anthracite); }
+
+  .plan{ margin-top:72px; padding-top:48px; border-top:1px solid var(--hairline); }
+  .plan-steps{ margin-top:34px; display:grid; grid-template-columns:repeat(3,1fr); gap:44px; }
+  @media(max-width:760px){ .plan-steps{ grid-template-columns:1fr; gap:30px; } }
+  .plan-step{ display:grid; grid-template-columns:34px 1fr; gap:16px; align-items:start; }
+  .plan-step .pn{
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:12px; font-weight:600; color:var(--rouge);
+    border-top:2px solid var(--rouge); padding-top:9px;
+  }
+  .plan-step h4{ margin-bottom:7px; }
+  .plan-step p{ font-size:15px; color:var(--anthracite); }
+
+  /* ---------- faq ---------- */
+  .faq{ margin-top:8px; border-top:1px solid var(--carbon); }
+  .faq details{ border-bottom:1px solid var(--hairline-soft); }
+  .faq summary{
+    cursor:pointer; list-style:none; padding:22px 40px 22px 0; position:relative;
+    font-size:17px; font-weight:700; letter-spacing:-0.005em;
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary::after{
+    content:"+"; position:absolute; right:6px; top:20px;
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size:19px; color:var(--rouge); font-weight:400; line-height:1;
+  }
+  .faq details[open] summary::after{ content:"–"; }
+  .faq details p{ padding:0 40px 24px 0; color:var(--anthracite); font-size:15.5px; max-width:66ch; }
+  .faq details p + p{ padding-top:0; margin-top:-8px; }
+
+  /* ---------- final ---------- */
+  .final{ text-align:center; }
+  .final h2{ max-width:20ch; margin:0 auto; }
+  .final .soft{ display:block; font-weight:400; font-style:italic; color:var(--anthracite); }
+  .final .btn{ margin-top:34px; }
+
+  /* ---------- footer ---------- */
+  footer.end{ background:var(--carbon); color:rgba(250,250,249,.62); padding:56px 0 48px; font-size:13px; }
+  footer.end .wrap{ display:grid; gap:26px; }
+  footer.end .fine{ max-width:90ch; line-height:1.65; }
+  footer.end a{ color:rgba(250,250,249,.86); text-decoration:underline; text-underline-offset:3px; }
+  .foot-row{ display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:space-between; align-items:baseline;
+    border-top:1px solid rgba(250,250,249,.14); padding-top:22px;
+    font-family:'JetBrains Mono', ui-monospace, Menlo, monospace; font-size:11px; letter-spacing:0.06em; }
+
+  /* ---------- motion (opt-in, so the page is readable without JS) ---------- */
+  .js .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .js .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .js .reveal{ opacity:1; transform:none; transition:none; }
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+<style>
+:root{--steel:#62675f;--hairline:rgba(25,40,30,.18);--hairline-soft:rgba(25,40,30,.13)}
+body{font-size:16px}.wrap,.bar-inner,.strip-grid{max-width:1320px}.wrap,.narrow{padding-left:64px;padding-right:64px}section{padding:112px 0}.hero{padding:0}.wordmark{font-size:28px;letter-spacing:-1.4px;font-weight:700}.logo-dot{font-size:11px;vertical-align:top;letter-spacing:0;margin-left:3px}.bar-inner{padding:22px 64px}.kicker{font-size:12px;line-height:1.5}.bar-terms,.btn-note,.strip-item,.mech-caption,.tried-col .num,.tried-col dt,.quote cite,.scale-row .lv,.proof-list dt,.terms-card .tag,.foot-row,.gait-step .st{font-size:12px}.strip-item{line-height:1.65;padding:26px 24px 26px 0}.lead{font-size:18px;line-height:1.7}.tried-col dd,.mech-points p,.gait-step p,.proof-list dd,.includes li,.terms-card p,.plan-step p,.faq details p{font-size:16px;line-height:1.7}.btn{font-size:14px;align-items:center;min-height:48px}.btn.lg{font-size:14px}.btn-note{line-height:1.6}.hero-ctas{gap:16px}.hero-ctas .btn-note{max-width:180px}.hero-sub{font-size:17px;line-height:1.7}.hero-scrim{display:none}.hero h1 .hit{color:inherit}.hero-rule{display:none}.hero-sub{margin-top:30px}.hero-inner{max-width:none}.hero-block{max-width:620px}.hero h1{text-wrap:initial}.hero .kicker{max-width:400px}.hero h1 .soft{margin-top:12px}.life-tile{padding:50px;min-height:330px;background:var(--sand);display:flex;flex-direction:column;justify-content:space-between}.life-tile:nth-child(2){background:var(--carbon);color:var(--nearwhite)}.life-tile>span{font-size:12px;letter-spacing:.12em}.life-tile>p{font-size:38px;line-height:1.15;letter-spacing:-.03em;max-width:15ch}.origin-art{background:var(--carbon);color:var(--sand);padding:42px;min-height:520px;display:flex;flex-direction:column;justify-content:space-between}.origin-art span{font-size:12px;letter-spacing:.12em}.origin-art p{font-size:100px;line-height:.95;letter-spacing:-.06em}.text-link{font:inherit;color:inherit;background:none;border:0;text-decoration:underline;cursor:pointer}dialog{margin:auto;padding:48px;border:0;max-width:480px;width:calc(100% - 40px);background:var(--nearwhite);color:var(--carbon);font:inherit}dialog::backdrop{background:#0008}.close-dialog{position:absolute;top:8px;right:16px;background:none;border:0;font-size:28px;cursor:pointer}.final h2{font-size:72px}.gait-step svg{max-height:130px}.tried-col{padding-left:24px}.tried-col:first-child{padding-left:0}.quote{max-width:950px}.quote blockquote{font-size:34px}.terms-card{padding:36px}.js .reveal{opacity:1;transform:none}a,button,summary{-webkit-tap-highlight-color:transparent}section{scroll-margin-top:80px}
+@media(max-width:760px){.wrap,.narrow{padding-left:24px;padding-right:24px}.bar-inner{padding:16px 24px}.wordmark{font-size:23px}header.bar .btn{font-size:12px;padding:10px 14px}section{padding:68px 0}.hero{padding:0}.hero-copy{padding:40px 24px}.hero-inner{padding:0}.hero-block{max-width:none}.hero .kicker{font-size:11px}.hero-sub{font-size:16px}.hero-ctas .btn-note{max-width:none}.hero-ctas .btn{width:100%;justify-content:center}.strip-grid{padding:0 24px}.strip-item{font-size:12px;padding:18px 0}.life-tile{padding:30px;min-height:260px}.life-tile>p{font-size:32px}.origin-art{min-height:400px;padding:30px}.origin-art p{font-size:80px}.final h2{font-size:50px}.quote blockquote{font-size:27px}.tried-col{padding:24px 0}.btn.lg{padding:18px 24px}.offer-grid,.proof-grid,.cal-grid,.mech-grid{gap:36px}.hero h1 .soft{margin-top:10px}}
+
+:root{--carbon:#243b30;--anthracite:#45554b;--nearwhite:#f8f6ee;--white:#fffef8;--sand:#e9ecdf;--frame-light:#f0eee4;--rouge:#42664e;--rouge-dark:#2c4936}body{font-family:'Manrope',sans-serif}h1,h2,h3,.pull p,.quote blockquote,.life-tile>p,.origin-art p{font-family:'DM Serif Display',serif;font-weight:400;letter-spacing:-.025em}h2{font-size:clamp(36px,4.1vw,54px);line-height:1.12}h3{font-size:34px}.kicker,.mono,.btn,.btn-note,.bar-terms,.strip-item,.mech-caption,.tried-col .num,.tried-col dt,.quote cite,.scale-row .lv,.proof-list dt,.terms-card .tag,.foot-row,.gait-step .st,.identity,.plan-step .pn,.price-block .cur{font-family:'Manrope',sans-serif}.kicker{letter-spacing:.14em;font-weight:600}.btn{border-radius:40px;letter-spacing:0;text-transform:none;font-weight:600}.hero-media{background:var(--nearwhite);min-height:720px;display:grid;grid-template-columns:55% 45%;max-width:1320px;margin:auto}.hero-media>img{position:absolute;width:41%;height:calc(100% - 64px);right:40px;left:auto;top:32px;border-radius:230px 230px 12px 12px;object-position:50% 62%}.hero-copy{padding:65px 30px 65px 64px;grid-column:1}.hero h1{font-size:clamp(45px,4.65vw,67px);line-height:1.04;color:var(--carbon);font-weight:400;letter-spacing:-.035em}.hero h1 .soft{color:#647852;font-style:italic}.hero .kicker,.hero-sub,.hero-ctas .btn-note{color:var(--anthracite)}header.bar{background:#f8f6eef5}.strip{background:var(--sand)}.terms-card{border-radius:20px}.life-tile{border-radius:110px 110px 12px 12px;padding-top:65px}.quote blockquote{font-weight:400}.verdict{border-radius:20px}.verdict .accent{color:#d4e8be}.mech-visual{border-radius:20px;overflow:hidden}.origin-art{border-radius:200px 200px 10px 10px;padding-top:90px}.gait-step .st{color:var(--rouge)}
+@media(min-width:1000px){section.ruled:nth-of-type(2) .wrap{display:grid;grid-template-columns:1fr 1fr;gap:0 72px}section.ruled:nth-of-type(2) .kicker,section.ruled:nth-of-type(2) h2,section.ruled:nth-of-type(2) .lead{grid-column:1}section.ruled:nth-of-type(2) .cost-list{grid-column:2;grid-row:1/5;grid-template-columns:1fr;margin:0}section.ruled:nth-of-type(2) .pull{grid-column:1/3}}
+@media(max-width:760px){.hero-media{display:flex;flex-direction:column;min-height:0}.hero-copy{order:0;padding:40px 24px}.hero-media>img{position:relative;order:1;inset:auto;width:calc(100% - 48px);height:340px;margin:0 24px 28px;border-radius:160px 160px 10px 10px;object-position:50% 68%}.hero h1{font-size:46px}}
+</style><style>.proof-grid>*{min-width:0}.gait svg [stroke="#F60000"]{stroke:var(--rouge)}@media(max-width:760px){.origin-art p{font-size:70px}.origin-art{padding:28px}.origin-art span{overflow-wrap:anywhere}}</style><style>
+:root{--carbon:#263731;--anthracite:#49564f;--steel:#606a64;--nearwhite:#f7f7f1;--white:#fdfdf9;--sand:#e6ebe3;--frame-light:#eff1e9;--rouge:#3f6350;--rouge-dark:#294736}
+.hero h1,h2,h3,h4,.life-tile>p{font-family:'Manrope',sans-serif;font-style:normal;font-weight:500}
+.hero h1{font-size:clamp(44px,4.45vw,64px);line-height:1.09;letter-spacing:-.048em}
+.hero h1 .soft{font-family:inherit;font-style:normal;font-weight:500;color:var(--rouge);margin-top:16px}
+h2{font-size:clamp(34px,3.7vw,50px);line-height:1.15;letter-spacing:-.04em}h3{font-size:29px;line-height:1.2;letter-spacing:-.03em}h4{font-size:18px;font-weight:650;letter-spacing:-.015em}
+.hero-media>img{border-radius:10px;right:48px;width:41%;height:calc(100% - 80px);top:40px}.hero-copy{padding-top:64px;padding-bottom:64px}.hero-media{min-height:730px}.hero-block{max-width:550px}.hero .kicker{font-size:12px;letter-spacing:.09em;max-width:440px}.hero-sub{max-width:42ch}.btn{border-radius:6px;font-weight:600;padding:16px 26px}.btn.lg{padding:18px 30px}.kicker{letter-spacing:.1em}.kicker::before{width:8px;height:8px;border-radius:50%}.life-tile,.verdict,.mech-visual,.terms-card{border-radius:8px}.life-tile{padding:44px;min-height:300px}.life-tile>p{font-size:34px;line-height:1.18}.origin-art{border-radius:8px;padding:40px;min-height:440px}.origin-art p{font-family:'Manrope';font-size:80px;letter-spacing:-.055em}.quote blockquote{font-size:36px;line-height:1.3;font-weight:400}.pull p{font-family:'Manrope';font-size:27px;line-height:1.4;font-weight:500}.final h2{font-size:66px}.final .soft{font-family:'Manrope';font-style:normal;font-weight:400}.scale-bar{height:8px;border-radius:2px}.mech-visual{border:1px solid var(--hairline);background:#e9ece6;padding:20px}.mech-caption{font-size:12px;line-height:1.6}.strip{border-top:1px solid var(--hairline)}.strip-item{font-size:12px;letter-spacing:0}.wordmark{font-weight:650}.gait-step{border-top:1px solid var(--hairline);padding-top:24px}.proof-list dt{letter-spacing:.07em}.terms-card{box-shadow:none}
+@media(max-width:760px){.hero-media{min-height:0}.hero-copy{padding:38px 24px}.hero h1{font-size:clamp(37px,10.5vw,46px)}.hero-media>img{position:relative;inset:auto;width:calc(100% - 48px);height:340px;margin:0 24px 28px;border-radius:8px}.hero h1 .soft{margin-top:14px}.life-tile{padding:30px}.origin-art{min-height:350px;padding:28px}.origin-art p{font-size:68px}.final h2{font-size:48px}.quote blockquote{font-size:28px}.hero .kicker{font-size:11px}}
+</style><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap" rel="stylesheet"><style>
+/* Supplied brand palette applied to the existing Human Precision composition. */
+:root{--carbon:#1A1A1A;--anthracite:#3A3A3A;--steel:#696969;--offwhite:#F2F2F0;--nearwhite:#FAFAF9;--white:#FFFFFF;--sand:#F2EBDC;--frame-light:#F9F6F0;--rouge:#F60000;--rouge-dark:#C20000;--hairline:rgba(26,26,26,.12);--hairline-soft:rgba(26,26,26,.07)}
+header.bar{background:rgba(250,250,249,.94)}
+.hero-media{background:var(--sand)}
+.hero h1 .soft{color:var(--carbon)}
+.hero-tech{background:var(--frame-light);border-top-color:var(--carbon)}
+.hero-tech img{mix-blend-mode:multiply}
+.strip{background:var(--offwhite)}
+.mech-visual{background:var(--offwhite)}
+.verdict .accent{color:#fff}
+.origin-art{background:var(--carbon);color:var(--sand)}
+
+.final .btn{background:var(--rouge);color:var(--white)}
+.final .btn:hover{background:var(--rouge-dark)}
+
+</style><style>
+/* Final type system: expressive headlines, precise interface. */
+:root{--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{font-family:var(--sans)}
+.hero h1,h2{font-family:var(--serif);font-weight:400;font-style:normal;letter-spacing:-.02em;line-height:1.09}
+.hero h1{font-size:clamp(44px,4.6vw,66px);line-height:1.06;letter-spacing:-.024em}
+.hero h1 .hit{color:var(--carbon);font-style:normal;font-weight:400}
+.hero h1 .soft{font-family:var(--serif);font-weight:400;font-style:italic;font-size:.88em;line-height:1.12;color:var(--carbon);margin-top:.28em}
+h2{font-size:clamp(34px,3.7vw,50px)}
+h3,h4,.mech-points strong,.terms-card h4,.faq summary{font-family:var(--sans);font-weight:600;font-style:normal;letter-spacing:-.015em;line-height:1.3}
+h3{font-size:29px}h4{font-size:18px}.faq summary{font-size:18px;font-weight:500;line-height:1.45}
+.wordmark,.kicker,.mono,.btn,.btn .price,.btn-note,.bar-terms,.strip-item,.mech-caption,.tried-col .num,.tried-col dt,.quote cite,.scale-row .lv,.proof-list dt,.terms-card .tag,.foot-row,.gait-step .st,.identity,.plan-step .pn,.price-block .cur,.price-block .amt,.hero-tech p,.hero-tech small,.hero-tech .tech-id,.life-tile>span,.origin-art span{font-family:var(--sans);font-style:normal}
+.btn,.btn .price{font-weight:600;letter-spacing:0}.btn .price{font-size:1em;font-variant-numeric:tabular-nums}
+.btn-note,.bar-terms{font-size:13px;line-height:1.55}.kicker{font-size:12px;font-weight:600;letter-spacing:.12em}
+.price-block .amt{font-weight:500;font-size:clamp(48px,5.5vw,68px);line-height:1.05;letter-spacing:-.045em;font-variant-numeric:lining-nums tabular-nums}
+.price-block .cur{font-size:13px}.tried-col .num,.plan-step .pn,.mech-points .mk{font-family:var(--sans);font-style:normal;font-weight:500;font-variant-numeric:tabular-nums}
+.hero-tech p{font-size:23px;line-height:1.2;font-weight:500;letter-spacing:-.025em}
+.pull p,.life-tile>p,.origin-art p{font-family:var(--sans);font-weight:500;font-style:normal}
+.quote blockquote{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(28px,3vw,40px);line-height:1.2;letter-spacing:-.015em}
+.final h2{font-family:var(--serif);font-weight:400;line-height:1.08}.final .soft{font-family:var(--serif);font-style:normal;font-weight:400}
+@media(max-width:1050px) and (min-width:761px){.hero h1{font-size:46px}.hero-tech p{font-size:19px}}
+@media(max-width:760px){.hero h1{font-size:clamp(40px,10.8vw,48px)}.hero h1 .soft{font-size:.88em}.hero-tech p{font-size:21px}.hero .kicker{font-size:11px}.final h2{font-size:48px}.quote blockquote{font-size:28px}}
+</style><style>
+.hero .hero-media{position:relative;display:flex;align-items:center;max-width:none;min-height:730px;background:var(--sand);isolation:isolate}
+.hero .hero-media>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:75% center;border-radius:0;margin:0;z-index:-2}
+.hero .hero-scrim{display:block;position:absolute;inset:0;height:auto;z-index:-1;background:linear-gradient(90deg,rgba(249,246,238,.94) 0%,rgba(249,246,238,.87) 30%,rgba(249,246,238,.50) 48%,rgba(249,246,238,0) 67%)}
+.hero .hero-copy{position:relative;width:100%;padding:68px 64px;display:block;z-index:1}
+.hero .hero-inner{max-width:1192px;margin:0 auto;width:100%;padding:0}
+.hero .hero-block{width:49%;max-width:580px;text-align:left}
+.hero .kicker{max-width:440px;justify-content:flex-start}
+.hero h1{font-size:clamp(46px,4.6vw,66px);line-height:1.06}
+.hero .hero-sub{max-width:42ch;font-size:17px;line-height:1.65;color:var(--anthracite)}
+.hero .hero-ctas{justify-content:flex-start;gap:16px 20px}
+.hero .hero-ctas .btn-note{color:var(--anthracite);max-width:190px}
+@media(min-width:1700px){.hero .hero-media{min-height:820px}.hero .hero-media>img{object-position:center 65%}}
+@media(max-width:1000px) and (min-width:761px){.hero .hero-copy{padding:54px 40px}.hero .hero-block{width:52%}.hero h1{font-size:49px}.hero .hero-media{min-height:720px}.hero .hero-media>img{object-position:72% center}}
+@media(max-width:760px){.hero .hero-media{min-height:900px;align-items:flex-start}.hero .hero-copy{padding:36px 24px 340px}.hero .hero-block{width:100%;max-width:540px}.hero h1{font-size:clamp(38px,10vw,48px)}.hero .hero-media>img{position:absolute;inset:auto 0 0;height:440px;width:100%;object-fit:cover;object-position:85% center;margin:0}.hero .hero-scrim{inset:0;background:linear-gradient(180deg,#f2ebdc 0%,#f2ebdc 48%,rgba(242,235,220,.95) 57%,rgba(242,235,220,0) 76%)}.hero .hero-sub{font-size:16px}.hero .hero-ctas .btn-note{max-width:none}.hero .hero-ctas{gap:12px}.hero .kicker{font-size:11px}}
+</style>
+<style>
+/* landing-d — brand assets restored on the "human modern" layout (2026-09-12) */
+.bar-logo{height:22px;width:auto;display:block}
+.mech-visual{background:var(--white)!important;padding:24px!important}
+.mech-visual img{mix-blend-mode:multiply;width:100%;aspect-ratio:1000/400;object-fit:cover;object-position:50% 52%}
+.proof-visual img{width:100%;border-radius:8px;display:block}
+.proof-sketch{margin-top:20px;background:var(--white);border:1px solid var(--hairline);border-radius:8px;padding:22px 26px}
+.proof-sketch img{mix-blend-mode:multiply}
+.life-tile.photo{position:relative;overflow:hidden;color:var(--nearwhite);background:var(--carbon)}
+.life-tile.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;z-index:0}
+.life-tile.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.62));z-index:1}
+.life-tile.photo>span,.life-tile.photo>p{position:relative;z-index:2}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="#top" class="img-slot" data-label="add assets/logo.png" style="width:150px;height:26px;">
-      <img src="assets/logo.png" alt="CarboSteps" class="nav-logo" onerror="this.parentElement.classList.add('img-missing')">
-    </a>
-    <div class="nav-links" id="nav-links">
-      <a href="#tech">The Technology</a>
-      <a href="#benefits">Benefits</a>
-      <a href="#footwear">The Shoe</a>
-      <a href="about.html">Our Story</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="nav-right">
-      <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
-        <span></span><span></span><span></span>
-      </button>
-      <a href="#cta" class="nav-cta">Pre-order</a>
+<header class="bar">
+  <div class="bar-inner">
+    <a href="#top" aria-label="CarboSteps"><img src="assets/logo.png" alt="CarboSteps" class="bar-logo"></a>
+    <div class="bar-right">
+      <span class="bar-terms">Three months to decide · Two-year guarantee</span>
+      <a href="#buy" class="btn">Buy now <span class="price">$299</span></a>
     </div>
   </div>
-</nav>
+</header>
 
-<!-- HERO — tagline entry, no pain hook -->
+<!-- ============ HERO — recognition + offer + action in one unit ============ -->
 <section class="hero" id="top">
   <div class="hero-media">
-    <img src="assets/lit.jpg" alt="Slippers on a warm wooden floor beside the bed, first thing in the morning">
+    <img src="assets/hero-morning.jpg" alt="Warm morning bedroom with a woman’s feet on the right beside a linen bed">
     <div class="hero-scrim"></div>
     <div class="hero-copy">
-      <div class="hero-copy-inner reveal">
-        <div class="kicker"><span class="dash"></span>Next-gen footwear</div>
-        <h1>Step into the <span class="highlight">future</span> of comfort.<span class="fade">It starts with the next step you take.</span></h1>
-        <div class="hero-rule"></div>
-        <p class="hero-sub">Carbon fiber, calibrated to your weight. A mechanism that stores the energy of each step and gives it back — first as an insole, then built into the shoe itself.</p>
-        <div class="hero-ctas">
-          <a href="#tech" class="btn-primary">Discover the technology</a>
-          <a href="#" class="btn-text"><span class="play">▶</span> Watch the video</a>
+      <div class="hero-inner">
+        <div class="hero-block">
+          <p class="kicker">Carbon fiber insoles · calibrated to your weight</p>
+          <h1>Every morning, the first step <span class="hit">hurts</span>.<span class="soft">It doesn't have to.</span></h1>
+          <div class="hero-rule"></div>
+          <p class="hero-sub">CarboSteps is a heel-and-arch insole built around a carbon blade that flexes under your weight and gives the energy back. Firm enough to actually support you. Thin enough to forget. Built to last.</p>
+          <div class="hero-ctas">
+            <a href="#buy" class="btn lg">Buy now <span class="price">$299</span></a>
+            <span class="btn-note">Three months to decide. Full refund.</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CMS -->
-<section class="cms" id="tech">
-  <div class="cms-grid">
+<div class="strip">
+  <div class="strip-grid">
+    <div class="strip-item">Calibrated to your weight, not an average</div>
+    <div class="strip-item">Fits the shoes you already own</div>
+    <div class="strip-item">Designed in France · T700 carbon fiber</div>
+    <div class="strip-item">Three months to decide · 2-year guarantee</div>
+  </div>
+</div>
+
+<!-- ============ RECOGNITION — the real cost, in his own terms ============ -->
+<section class="ruled">
+  <div class="wrap">
+    <p class="kicker reveal">What it actually costs</p>
+    <h2 class="reveal">It isn't just the pain.<br>It's everything you've quietly stopped doing.</h2>
+    <p class="lead reveal">Nobody decides to slow down. It happens one small adjustment at a time, and each one seems reasonable on its own.</p>
+    <ul class="cost-list reveal">
+      <li>You take the taxi for eight blocks you used to walk.</li>
+      <li>You sit down before everyone else does, and make it look casual.</li>
+      <li>You cut the walk short and say you've seen enough.</li>
+      <li>You do the arithmetic before a trip: how long can I stay on my feet?</li>
+      <li>You pass on the city break and tell yourself it's the flights.</li>
+      <li>You stand differently in a queue, shifting your weight.</li>
+    </ul>
+    <div class="pull reveal">
+      <p>Pain shouldn't get to decide how big your life is.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DISSATISFACTION — the compromise nobody solves ============ -->
+<section class="sand">
+  <div class="wrap">
+    <p class="kicker reveal">Why nothing has held up</p>
+    <h2 class="reveal">You've already paid to be disappointed.</h2>
+    <p class="lead reveal">Not because you chose badly. Because every option on the shelf makes you pick a side of the same trade-off — and then gives out.</p>
+
+    <div class="tried reveal">
+      <div class="tried-col">
+        <span class="num">01</span>
+        <h4>Cushioning and gel</h4>
+        <dl>
+          <div><dt>What it gets right</dt><dd>Instant relief the moment you step in. It feels like the answer.</dd></div>
+          <div><dt>Where it gives out</dt><dd>Foam absorbs energy and keeps it. There is no structure underneath, and within months it has packed down flat.</dd></div>
+        </dl>
+      </div>
+      <div class="tried-col">
+        <span class="num">02</span>
+        <h4>One-shape support</h4>
+        <dl>
+          <div><dt>What it gets right</dt><dd>It adds a real arch shape, which is more than foam does.</dd></div>
+          <div><dt>Where it gives out</dt><dd>One shape, one stiffness, sold to everyone. A 130-pound frame and a 220-pound frame get the identical part.</dd></div>
+        </dl>
+      </div>
+      <div class="tried-col">
+        <span class="num">03</span>
+        <h4>Rigid custom support</h4>
+        <dl>
+          <div><dt>What it gets right</dt><dd>Stiff enough to genuinely carry load. It does what it claims.</dd></div>
+          <div><dt>Where it gives out</dt><dd>That same stiffness is what makes it unbearable past lunchtime — so it ends up in a drawer.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="verdict reveal">
+      <p>Support or comfort. Pick one — and either way, it flattens.<br><span class="accent">That is the trade-off CarboSteps was built to remove.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MECHANISM — the rational reason a sceptic is waiting for ============ -->
+<section class="ruled">
+  <div class="wrap">
+    <p class="kicker reveal">How it works</p>
+    <h2 class="reveal">A spring, not a cushion.</h2>
+    <p class="lead reveal">Every step asks your foot for a certain amount of work. When that demand stays above what the foot can absorb, the ache sets in — thousands of times a day. CarboSteps doesn't numb that. It takes a share of the load.</p>
+
+    <div class="mech-grid" style="margin-top:56px;">
+      <div class="mech-visual reveal">
+        <img src="assets/cms-product.png" alt="Side profile of the Carbon Motion System: two carbon blades joined at the heel, separated by a gap that closes under load">
+        <p class="mech-caption">Carbon Motion System · side profile · two blades, heel to arch · patent pending</p>
+      </div>
+      <div class="reveal">
+        <h3>Two blades, one gap.</h3>
+        <ul class="mech-points">
+          <li><span class="mk">01</span><p><strong>It compresses under load.</strong> Your weight closes the gap between the blades. The carbon bends — it does not squash — and stores that energy instead of swallowing it.</p></li>
+          <li><span class="mk">02</span><p><strong>It gives the energy back.</strong> As you roll onto the front of your foot, the blade returns to shape and releases what it stored, at the moment you're pushing off.</p></li>
+          <li><span class="mk">03</span><p><strong>It stops before your toes.</strong> Three-quarter length: it ends behind the ball of your foot, so your forefoot moves exactly as it always has.</p></li>
+          <li><span class="mk">04</span><p><strong>The rear is rounded.</strong> The mechanism stays engaged whether you land square, slightly inside or slightly outside.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gait">
+      <div class="gait-step reveal">
+        <svg viewBox="0 0 200 92" role="img" aria-label="Heel strike: load arrives at the heel and the blade begins to flex">
+          <path d="M14 62 C 52 40, 96 44, 140 52 C 162 56, 178 60, 190 62" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 70 C 54 54, 100 56, 142 60 C 164 63, 178 66, 190 68" fill="none" stroke="#8A8A8A" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M26 10 L26 40" stroke="#F60000" stroke-width="2" stroke-linecap="round"/>
+          <path d="M20 33 L26 41 L32 33" fill="none" stroke="#F60000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="8" y1="84" x2="192" y2="84" stroke="#1A1A1A" stroke-width="1" opacity="0.18"/>
+        </svg>
+        <p class="st">01 — Heel strike</p>
+        <h4>The impact lands here first.</h4>
+        <p>The blade takes the shock at the heel and starts to bend, so less of it travels straight up through you.</p>
+      </div>
+      <div class="gait-step reveal">
+        <svg viewBox="0 0 200 92" role="img" aria-label="Mid stance: the gap between the blades closes as weight passes over the arch">
+          <path d="M14 64 C 52 48, 96 50, 140 55 C 162 58, 178 61, 190 63" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 70 C 54 58, 100 59, 142 61 C 164 64, 178 66, 190 68" fill="none" stroke="#8A8A8A" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M74 10 L74 38" stroke="#F60000" stroke-width="2" stroke-linecap="round"/>
+          <path d="M68 31 L74 39 L80 31" fill="none" stroke="#F60000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M100 10 L100 40" stroke="#F60000" stroke-width="2" stroke-linecap="round"/>
+          <path d="M94 33 L100 41 L106 33" fill="none" stroke="#F60000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="8" y1="84" x2="192" y2="84" stroke="#1A1A1A" stroke-width="1" opacity="0.18"/>
+        </svg>
+        <p class="st">02 — Mid stance</p>
+        <h4>The gap closes.</h4>
+        <p>Your full weight passes over the arch. The two blades come together and hold the energy rather than losing it.</p>
+      </div>
+      <div class="gait-step reveal">
+        <svg viewBox="0 0 200 92" role="img" aria-label="Push off: the blade returns to shape and releases stored energy forward">
+          <path d="M14 60 C 52 38, 96 42, 140 50 C 162 54, 178 58, 190 60" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 70 C 54 52, 100 54, 142 58 C 164 61, 178 64, 190 66" fill="none" stroke="#8A8A8A" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M150 30 L182 30" stroke="#F60000" stroke-width="2" stroke-linecap="round"/>
+          <path d="M175 24 L183 30 L175 36" fill="none" stroke="#F60000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="8" y1="84" x2="192" y2="84" stroke="#1A1A1A" stroke-width="1" opacity="0.18"/>
+        </svg>
+        <p class="st">03 — Push off</p>
+        <h4>It comes back.</h4>
+        <p>The blade returns to shape and releases what it stored, forward, into the next step. That is the part foam cannot do.</p>
+      </div>
+    </div>
+
+    <div class="quote reveal">
+      <blockquote>"Cushioning the pain doesn't work. We need to work with the foot to reduce the load on it."</blockquote>
+      <cite>Franck — inventor of the Carbon Motion System</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CALIBRATION — the differentiator, as proof ============ -->
+<section class="frame">
+  <div class="wrap">
+    <div class="cal-grid">
+      <div class="reveal">
+        <p class="kicker">Made for your weight</p>
+        <h2>Your CarboSteps will be calibrated to you.</h2>
+        <p class="lead">A spring only works if it's tuned to what it carries. This is the part almost nobody does. A blade stiff enough for a 220-pound frame barely moves under a 130-pound one — it becomes a plank. Too soft, and it bottoms out and does nothing at all.</p>
+        <p class="lead">So CarboSteps isn't made in one stiffness. You're matched to a blade calibrated to your weight, which is why it can be firm enough to genuinely support you and still disappear under your foot.</p>
+      </div>
+      <div class="reveal">
+        <div class="scale" aria-hidden="true">
+          <div class="scale-row"><span class="lv">Lighter</span><div class="scale-bar"><span style="width:34%"></span></div></div>
+          <div class="scale-row"><span class="lv">↓</span><div class="scale-bar"><span style="width:52%"></span></div></div>
+          <div class="scale-row"><span class="lv">Your blade</span><div class="scale-bar"><span style="width:68%"></span></div></div>
+          <div class="scale-row"><span class="lv">↓</span><div class="scale-bar"><span style="width:84%"></span></div></div>
+          <div class="scale-row"><span class="lv">Heavier</span><div class="scale-bar"><span style="width:100%"></span></div></div>
+        </div>
+        <p class="mech-caption" style="border-top:0; padding-top:16px;">Stiffness rises with the weight it is tuned for. You select yours at checkout.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FREEDOM REGAINED — the beat the homepage is missing ============ -->
+<section class="ruled">
+  <div class="wrap">
+    <p class="kicker reveal">What actually changes</p>
+    <h2 class="reveal">You stop planning your day around your feet.</h2>
+    <div class="free-grid reveal"><div class="life-tile"><span>01 / EVERYDAY</span><p>The afternoon you don't cut short.</p></div><div class="life-tile photo"><img src="assets/use-trail.jpg" alt="" loading="lazy"><span>02 / FURTHER</span><p>Walking back to the hotel because the evening is good.</p></div></div>
+    <div class="free-copy reveal">
+      <p>The point was never the insole. It's the afternoon you don't cut short. The second museum. The market on Saturday, at the pace of whoever you're with rather than the pace your feet allow.</p>
+      <p>It's standing through a full day of meetings and not spending the last two hours waiting for a chair. It's walking back to the hotel because the evening is good, and the distance doesn't enter into it.</p>
+      <p>The measure of this isn't how the insole feels. It's how little you think about it — and how much of your day quietly goes back to being yours.</p>
+      <p class="identity">For those who won't settle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROOF — last, as the reference says ============ -->
+<section class="sand">
+  <div class="wrap">
+    <div class="proof-grid">
+      <div class="reveal">
+        <p class="kicker">Where it comes from</p>
+        <h2>Drawn by hand on the Côte d'Azur.</h2>
+        <p class="lead">Franck doesn't use design software. He draws on tracing paper and shapes the carbon himself, by hand, until the blade does what he wants. He built the first one to solve his own problem, in Juan-les-Pins, over three years of drawings.</p>
+        <dl class="proof-list">
+          <div><dt>Material</dt><dd><strong>T700 carbon fiber.</strong> It bends and returns to shape. It doesn't pack down the way foam and plastic do.</dd></div>
+          <div><dt>Intellectual property</dt><dd><strong>US patent pending</strong>, with a registered design filed in France.</dd></div>
+          <div><dt>Origin</dt><dd><strong>Designed in France</strong>, on the Côte d'Azur. Sold in the United States.</dd></div>
+          <div><dt>Construction</dt><dd><strong>Heel and arch only</strong>, three-quarter length, thin enough to sit in the shoes you already wear.</dd></div>
+        </dl>
+      </div>
+      <div class="reveal">
+        <div class="proof-visual"><img src="assets/riviera.webp" alt="The Côte d'Azur coastline near Juan-les-Pins" loading="lazy"></div>
+        <div class="proof-sketch"><img src="assets/carbosteps-sketch.png" alt="Franck's hand-drawn study of the carbon blade, above the CarboSteps wordmark" loading="lazy"><p class="mech-caption">One of the original drawings. The logo is that drawing — not a rendering of it.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE OFFER — value and cost, at the point of action ============ -->
+<section class="ruled" id="buy">
+  <div class="wrap">
+    <div class="offer-grid">
+      <div class="reveal">
+        <p class="kicker">The offer</p>
+        <h2>One pair, calibrated to you.</h2>
+        <div class="price-block">
+          <span class="amt">$299</span>
+          <span class="cur">USD · per pair</span>
+        </div>
+        <ul class="includes">
+          <li><span><strong>One pair of CarboSteps insoles</strong>, heel and arch, three-quarter length.</span></li>
+          <li><span><strong>Calibrated to your weight.</strong> You give us your weight and shoe size at checkout; the blade stiffness follows from it.</span></li>
+          <li><span><strong>No break-in routine.</strong> They go into the shoes you already own and you walk.</span></li>
+          <li><span><strong>Three months to decide</strong>, and a two-year guarantee behind the product itself.</span></li>
+        </ul>
+        <div class="offer-cta">
+          <!-- TODO — wire this to the real checkout URL. There is no cart yet;
+               this is the single dependency that blocks the page from selling. -->
+          <button type="button" class="btn lg" data-demo="Design preview: checkout is not connected yet. Weight and size selection will be available when the store opens.">Buy now <span class="price">$299</span></button>
+          <p class="btn-note">Secure checkout · you choose weight and size on the next screen</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="terms-card">
+          <p class="tag">Your risk</p>
+          <h4>Three months to decide.</h4>
+          <p>Wear them for three months. If they're not for you, send them back and we refund the purchase in full. You are not asked to justify it.</p>
+        </div>
+        <div class="terms-card">
+          <p class="tag">Our risk</p>
+          <h4>Two-year guarantee.</h4>
+          <p>Separate from the trial, and covering a different thing: if the product itself fails within two years, we replace it. The trial is about whether you like them. The guarantee is about whether they hold up.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan">
+      <p class="kicker reveal">What happens next</p>
+      <h3 class="reveal">Three steps, and none of them are complicated.</h3>
+      <div class="plan-steps">
+        <div class="plan-step reveal">
+          <span class="pn">01</span>
+          <div>
+            <h4>Tell us your weight and size</h4>
+            <p>Two fields at checkout. That's what determines which blade you get — there is no appointment, no scan, no mould.</p>
+          </div>
+        </div>
+        <div class="plan-step reveal">
+          <span class="pn">02</span>
+          <div>
+            <h4>Put them in the shoes you own</h4>
+            <p>They're three-quarter length and thin. Move them between pairs as you like. Nothing to buy alongside them.</p>
+          </div>
+        </div>
+        <div class="plan-step reveal">
+          <span class="pn">03</span>
+          <div>
+            <h4>Give it three months</h4>
+            <p>Wear them through ordinary days. If you're not convinced by the end of it, send them back for a full refund.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OBJECTIONS ============ -->
+<section class="frame">
+  <div class="narrow">
+    <p class="kicker reveal">Before you decide</p>
+    <h2 class="reveal" style="margin-bottom:36px;">The questions people actually ask.</h2>
+    <div class="faq reveal">
+      <details>
+        <summary>Will they fit the shoes I already have?</summary>
+        <p>That's what the three-quarter length is for. CarboSteps covers the heel and the arch and stops behind the ball of your foot, and the carbon is thin — far thinner than a moulded support. It's designed to go into your existing shoes rather than to send you shopping for new ones.</p>
+        <p>Very tight dress shoes and anything with almost no depth are the exception, as they are for any insole.</p>
+      </details>
+      <details>
+        <summary>I've tried insoles before and they stopped working. Why is this different?</summary>
+        <p>Because of what gives out. Foam and plastic relieve by compressing, and compression is exactly what they lose — they pack down and the relief fades with them. Carbon doesn't work by compressing; it works by bending and returning to shape, which is what it is made to do repeatedly.</p>
+        <p>That's also why there's a two-year guarantee on the product and three months for you to test the claim yourself.</p>
+      </details>
+      <details>
+        <summary>How do you know which stiffness I need?</summary>
+        <p>From your weight. A blade is a spring, and a spring is specified by the load it carries — that single number does most of the work. You enter it at checkout along with your shoe size, and you're matched to the corresponding blade.</p>
+      </details>
+      <details>
+        <summary>Do I have to break them in?</summary>
+        <p>There's no prescribed routine. They're firm, but the flex is tuned to your weight rather than fixed, which is what stops them feeling like a board underfoot. Most people put them in and carry on; if you want to ease into them over a few days, that's fine too.</p>
+      </details>
+      <details>
+        <summary>Is this a medical device?</summary>
+        <p>No, and we're careful about that. CarboSteps is registered as an FDA Class I exempt device (21 CFR 890.3475). It relieves fatigue and absorbs impact. It is not a treatment, we don't claim it treats any specific condition, and it isn't a substitute for seeing a professional about a problem that concerns you.</p>
+      </details>
+      <details>
+        <summary>What if they simply don't work for me?</summary>
+        <p>Send them back within three months and we refund what you paid. That's the whole point of the three months — it's long enough to include the ordinary days, the long ones, and the travel, rather than a week where nothing much happens.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL ACTION ============ -->
+<section class="sand final">
+  <div class="wrap">
+    <h2 class="reveal">Don't stop.<span class="soft">Keep moving.</span></h2>
     <div class="reveal">
-      <div class="kicker"><span class="dash"></span>Meet the</div>
-      <h2>Carbon Motion System™</h2>
-      <p>A dynamic architecture that works with your body.<span class="cms-note">(patent pending)</span></p>
-      <div class="cms-rule"></div>
-      <div class="cms-tag">Built different.<br>Made to move.</div>
-    </div>
-    <div class="cms-visual img-slot reveal" data-label="add assets/cms-product.png&#10;(product render / studio shot)">
-      <img src="assets/cms-product.png" alt="Carbon Motion System product render" onerror="this.parentElement.classList.add('img-missing')">
+      <a href="#buy" class="btn lg">Buy now <span class="price">$299</span></a>
+      <p class="btn-note">Three months to decide · full refund · two-year guarantee</p>
     </div>
   </div>
 </section>
 
-<!-- FROM INSOLE TO SHOE -->
-<section class="shoe" id="footwear">
-  <div class="shoe-grid">
-    <div class="shoe-visual img-slot light reveal" data-label="add assets/carbosteps-shoe.jpg&#10;(shoe render — carbon blade visible in the sole)">
-      <img src="assets/carbosteps-shoe.jpg" alt="CarboSteps shoe with the carbon blade visible inside the midsole" onerror="this.parentElement.classList.add('img-missing')">
-    </div>
-    <div class="reveal">
-      <div class="kicker"><span class="dash"></span>What comes next</div>
-      <h3>The insole today. The shoe tomorrow.</h3>
-      <p class="lead">The Carbon Motion System is a mechanism, not a single product. It starts as an insole that drops into the shoes you already wear — and the same architecture is being engineered straight into the sole of a CarboSteps shoe.</p>
-      <div class="phase">
-        <span class="n">01</span>
-        <div>
-          <h5>The insole</h5>
-          <p>Heel and arch only, calibrated to your weight. Slides into the shoes already in your closet.</p>
-        </div>
-      </div>
-      <div class="phase">
-        <span class="n">02</span>
-        <div>
-          <h5>The shoe</h5>
-          <p>The same two-blade architecture built into the midsole and tuned as one piece with the shoe. <span class="phase-note">(in development)</span></p>
-        </div>
-      </div>
+<footer class="end">
+  <div class="wrap">
+    <p class="fine">CarboSteps is an FDA Class I exempt device (21 CFR 890.3475). This product relieves fatigue and absorbs impact; it is not a medical treatment and does not claim to treat any specific condition. If you have a persistent problem with your feet, see a qualified professional.</p>
+    <div class="foot-row">
+      <span>© 2026 CarboSteps LLC</span>
+      <span><a href="contact.html">Contact</a> · <a href="about.html">Our story</a></span>
     </div>
   </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features" id="benefits">
-  <div class="feature-grid">
-    <div class="feature-item reveal">
-      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M2 15 Q 8 9, 12 13 Q 16 17, 22 11"/></svg>
-      <h4>Dynamic Support</h4>
-      <p>Supports the arch and heel while keeping the forefoot free to move naturally.</p>
-    </div>
-    <div class="feature-item reveal">
-      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M4 16 Q 10 8, 20 16"/><path d="M12 4v6M9 8l3-4 3 4"/></svg>
-      <h4>Energy Return</h4>
-      <p>Engineered to absorb impact and return energy with every step.</p>
-    </div>
-    <div class="feature-item reveal">
-      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M12 2 C 8 8, 8 16, 12 22 C 14 16, 14 8, 12 2Z"/></svg>
-      <h4>Light &amp; Strong</h4>
-      <p>Carbon fiber design for maximum performance with minimal weight.</p>
-    </div>
-    <div class="feature-item reveal">
-      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
-      <h4>Calibrated to You</h4>
-      <p>Available in multiple stiffness levels to match your weight and walking style.</p>
-    </div>
-  </div>
-</section>
-
-<!-- BIOMECHANICS -->
-<section class="biomech">
-  <div class="biomech-header reveal">
-    <div class="kicker"><span class="dash"></span>Designed for movement</div>
-    <h3>Works with you, step after step.</h3>
-    <p class="lead">It takes the impact your heel and arch would otherwise carry alone, stores it, and hands it back as forward motion — so the end of the day feels closer to the start of it.</p>
-  </div>
-  <div class="biomech-visual img-slot light reveal" data-label="add assets/foot-biomechanics.png&#10;(gait / cross-section diagram)">
-    <img src="assets/foot-biomechanics.png" alt="Foot biomechanics diagram" onerror="this.parentElement.classList.add('img-missing')">
-  </div>
-  <div class="biomech-footer reveal">
-    <div class="steps">
-      <div class="step"><span class="n">1</span><div><h5>Heel strike</h5><p>Shock absorption and stability.</p></div></div>
-      <div class="step"><span class="n">2</span><div><h5>Mid stance</h5><p>Adaptive flex and energy storage.</p></div></div>
-      <div class="step"><span class="n">3</span><div><h5>Push off</h5><p>Energy return for forward motion.</p></div></div>
-    </div>
-    <a href="#" class="link-arrow">Learn how it works <span class="circ">→</span></a>
-  </div>
-</section>
-
-<!-- LONGEVITY -->
-<section class="longevity">
-  <div class="longevity-header reveal">
-    <div class="longevity-text">
-      <div class="kicker"><span class="dash"></span>Built to last</div>
-      <h3>Not foam. Not plastic. Aerospace-grade carbon fiber.</h3>
-      <p class="lead">While most insoles compress, crack, or lose their shape within months, CarboSteps is engineered from aerospace-grade carbon fiber — built to hold its shape and its function, step after step, year after year.</p>
-    </div>
-    <div class="longevity-seal">
-      <svg class="stamp-lg" viewBox="0 0 160 160" aria-label="2-Year Guarantee seal">
-        <defs>
-          <path id="stampRing" d="M 80,80 m -60,0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0" />
-        </defs>
-        <circle cx="80" cy="80" r="68" fill="none" stroke="var(--rouge)" stroke-width="1.4"></circle>
-        <circle cx="80" cy="80" r="52" fill="none" stroke="var(--rouge)" stroke-width="1"></circle>
-        <text font-family="'JetBrains Mono', monospace" font-size="8.5" letter-spacing="3" fill="var(--rouge)">
-          <textPath href="#stampRing" startOffset="2%">2-YEAR GUARANTEE • 2-YEAR GUARANTEE •</textPath>
-        </text>
-        <text x="80" y="76" text-anchor="middle" font-family="'DM Sans', sans-serif" font-weight="900" font-size="26" fill="var(--carbon)">2 YR</text>
-        <text x="80" y="94" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" fill="var(--anthracite)">GUARANTEE</text>
-      </svg>
-    </div>
-  </div>
-  <div class="longevity-stats reveal">
-    <div class="stat">
-      <div class="stat-rule"></div>
-      <div class="stat-value">Aerospace-grade</div>
-      <div class="stat-label">Carbon fiber construction — not foam, not plastic.</div>
-    </div>
-    <div class="stat">
-      <div class="stat-rule"></div>
-      <div class="stat-value">2-Year Guarantee</div>
-      <div class="stat-label">Full coverage, because we've engineered it to last that long — and beyond.</div>
-    </div>
-    <div class="stat">
-      <div class="stat-rule"></div>
-      <div class="stat-value">Zero Compression Set</div>
-      <div class="stat-label">It won't flatten, soften, or lose its function over time.</div>
-    </div>
-  </div>
-</section>
-
-<!-- GUARANTEE -->
-<section class="guarantee">
-  <div class="guarantee-inner reveal">
-    <div class="kicker"><span class="dash"></span>Try it risk-free</div>
-    <h3>Try it. See for yourself.</h3>
-    <div class="guarantee-terms">3 months. Full refund. <span class="accent">No questions asked.</span></div>
-    <a href="#cta" class="guarantee-btn">Pre-order CarboSteps</a>
-  </div>
-</section>
-
-<!-- FINAL CTA — short form of the locked closing (the full form names the pain) -->
-<section class="final" id="cta">
-  <div class="final-content">
-    <h2>Don't stop.<span class="accent">Keep moving.</span></h2>
-    <a href="#" class="final-btn">Pre-order CarboSteps</a>
-  </div>
-</section>
-
-<footer id="faq">
-  <p class="fine">CarboSteps is an FDA Class I exempt device (21 CFR 890.3475). This product relieves fatigue and absorbs impact; it is not a medical treatment and does not claim to treat any specific condition.</p>
-  <div class="copy">© 2026 CarboSteps</div>
 </footer>
 
 <script>
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  document.documentElement.classList.add('js');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-  // mobile nav toggle (same script as index.html)
-  const navEl = document.querySelector('nav');
-  const navToggle = document.querySelector('.nav-toggle');
-  if(navToggle){
-    navToggle.addEventListener('click', ()=>{
-      const open = navEl.classList.toggle('nav-open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.querySelectorAll('.nav-links a').forEach(a=>{
-      a.addEventListener('click', ()=>{
-        navEl.classList.remove('nav-open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-    window.addEventListener('resize', ()=>{
-      if(window.innerWidth > 860){
-        navEl.classList.remove('nav-open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 </script>
 
-</body>
+<dialog id="preview-dialog"><button class="close-dialog" aria-label="Close">×</button><p class="kicker">CarboSteps / Preview</p><p id="dialog-copy"></p></dialog><script>const d=document.querySelector('dialog');document.querySelectorAll('[data-demo]').forEach(b=>b.onclick=()=>{document.querySelector('#dialog-copy').textContent=b.dataset.demo;d.showModal()});document.querySelector('.close-dialog').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()});</script></body>
 </html>
